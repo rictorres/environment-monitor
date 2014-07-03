@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+	<head>
+		<!-- bower:css -->
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+		<!-- endbower -->
+
+		<!-- build:css styles/main.css -->
+		<link href="styles/main.css" rel="stylesheet">
+		<!-- endbuild -->
+
+		<!-- bower:js -->
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/ashe/ashe.js"></script>
+		<!-- endbower -->
+
+		<!-- build:js scripts/popup.js -->
+		<script src="scripts/popup.js"></script>
+		<!-- endbuild -->
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="navbar navbar-inverse">
+				<div class="container">
+					<div class="navbar-header">
+						<a href="" class="navbar-brand">DAx Environment Monitor&nbsp;<i class="glyphicon glyphicon-refresh"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row" id="render-container">
+					<div class="col-xs-12">
+						<p class="loading lead">Loading...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script id="template-envs" type="html/template">
+			{% for env in environments %}
+			<div class="col-xs-6">
+				<div id="{{env.name}}" class="panel panel-default">
+					<div class="panel-heading">
+						<h1 class="panel-title">
+							<strong>{{env.label}}</strong>
+						</h1>
+					</div>
+					<table class="package table table-condensed table-hover">
+						<tbody>
+						{% for package in env.packages %}
+							<tr>
+								<td>{{package.repo}}</td>
+								<td class="text-center">{{package.branch}}</td>
+								<td class="text-right">{{package.revision}}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					<div class="server-status panel-footer">
+						<div class="row">
+							<div class="col-xs-6">
+								<div class="alert alert-{{env.serverStatus.apacheStatus.class}}">
+									<strong>Apache</strong>
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<div class="alert alert-{{env.serverStatus.tomcatStatus.class}}">
+									<strong>Tomcat</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</script>
+	</body>
+
+</html>

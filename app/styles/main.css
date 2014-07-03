@@ -1,0 +1,55 @@
+/*body {
+	overflow: scroll;
+}*/
+
+.wrap {
+	position: relative;
+	/*overflow: scroll;*/
+	min-width: 600px;
+	min-height: 300px;
+}
+
+.navbar-brand .glyphicon {
+	line-height: 12px;
+	visibility: hidden;
+}
+
+.navbar-brand:hover .glyphicon {
+	visibility: visible;
+}
+
+.panel-heading {
+	padding: 8px 10px;
+}
+
+.panel-title {
+	font-size: 14px;
+}
+
+.panel-footer {
+	padding: 10px;
+	background: none;
+	font-size: 12px;
+}
+
+.panel-footer .alert {
+	margin-bottom: 0;
+	text-align: center;
+	padding: 6px 8px;
+	font-size: 10px;
+}
+
+.loading {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.package,
+.server-status {
+	font-size: 13px;
+}
+
+.package td,
+.server-status td {
+	padding: 5px 10px !important;
+}

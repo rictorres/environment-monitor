@@ -42,7 +42,6 @@
 			</div>
 		</div>
 
-
 		<script id="template-envs" type="html/template">
 			{% for env in environments %}
 			<div class="col-xs-6">
@@ -52,34 +51,46 @@
 							<strong>{{env.label}}</strong>
 						</h1>
 					</div>
-					<table class="package table table-condensed table-hover">
+					<table class="package table table-condensed table-hover" id="package-{{env.name}}">
 						<tbody>
-						{% for package in env.packages %}
 							<tr>
-								<td>{{package.repo}}</td>
-								<td class="text-center">{{package.branch}}</td>
-								<td class="text-right">{{package.revision}}</td>
+								<td>Loading packages...</td>
 							</tr>
-						{% endfor %}
 						</tbody>
 					</table>
-					<div class="server-status panel-footer">
-						<div class="row">
-							<div class="col-xs-6">
-								<div class="alert alert-{{env.serverStatus.apacheStatus.class}}">
-									<strong>Apache</strong>
-								</div>
-							</div>
-							<div class="col-xs-6">
-								<div class="alert alert-{{env.serverStatus.tomcatStatus.class}}">
-									<strong>Tomcat</strong>
-								</div>
-							</div>
-						</div>
+					<div class="server-status panel-footer" id="status-{{env.name}}">
+						<p>Loading status...</p>
 					</div>
 				</div>
 			</div>
 			{% endfor %}
+		</script>
+
+		<script id="template-packages" type="html/template">
+				<tbody>
+				{% for package in packages %}
+					<tr>
+						<td>{{package.repo}}</td>
+						<td class="text-center">{{package.branch}}</td>
+						<td class="text-right">{{package.revision}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+		</script>
+
+		<script id="template-status" type="html/template">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="alert alert-{{status.apacheStatus.class}}">
+						<strong>Apache</strong>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="alert alert-{{status.tomcatStatus.class}}">
+						<strong>Tomcat</strong>
+					</div>
+				</div>
+			</div>
 		</script>
 	</body>
 

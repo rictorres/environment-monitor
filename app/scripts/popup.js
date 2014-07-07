@@ -54,32 +54,35 @@
 		init: function() {
 			var self = this;
 			var environments = DAxMon.CONFIG.environments;
-			var $container = $('#render-container');
-			var counter = 0;
+			var config = {
+				'containers': {
+					'main': $('#render-container')
+				},
+				'templates': {
+					'main': $('#template-envs').html(),
+					'packages': $('#template-packages').html(),
+					'status': $('#template-status').html()
+				}
+			};
+
+			self.render(config.templates.main, config.containers.main, {'environments': environments});
 
 			environments.forEach(function(env) {
 				self.getData('/packages?env=' + env.name, function(response) {
-					env.packages = response;
+					var container = $('#package-' + env.name);
+					self.render(config.templates.packages, container, {'packages': response});
 
 					self.getData('/server-status?env=' + env.name, function(response) {
-						env.serverStatus = response;
-
-						counter++;
-						if (counter === environments.length) {
-							// console.log('envs', {'environments': environments});
-							self.render($container, {'environments': environments});
-						}
-
+						var container = $('#status-' + env.name);
+						self.render(config.templates.status, container, {'status': response});
 					});
-
 				});
 			});
 		},
 
-		render: function($container, data) {
-			var template = $('#template-envs').html();
+		render: function(template, container, data) {
 			var rendered = Ashe.parse(template, data);
-			$container.html(rendered);
+			container.html(rendered);
 		},
 
 		getData: function(query, callback) {

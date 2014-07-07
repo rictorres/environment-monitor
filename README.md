@@ -9,6 +9,8 @@
 ## Developing
 
 ```
+$ npm install
+$ bower install
 $ grunt debug
 ```
 Grunt will run with `watch` and `livereload`. Source will be available at `./app`

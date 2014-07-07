@@ -13,7 +13,7 @@ $ grunt debug
 ```
 Grunt will run with `watch` and `livereload`. Source will be available at `./app`
 
-1. Go to `chrome://extensions`, enable Developer mode and load app as an unpacked extension
+1. Go to `chrome://extensions`, enable Developer mode
 2. Click on Load unpacked extension
 3. Point to `./app`
 

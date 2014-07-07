@@ -1,4 +1,3 @@
-// Generated on 2014-07-01 using generator-chrome-extension 0.2.7
 'use strict';
 
 // # Globbing
@@ -19,6 +18,7 @@ module.exports = function (grunt) {
 	var config = {
 		app: 'app',
 		dist: 'dist',
+		assets: 'assets',
 		manifest: grunt.file.readJSON('app/manifest.json')
 	};
 
@@ -34,7 +34,10 @@ module.exports = function (grunt) {
 				tasks: ['bowerInstall']
 			},
 			js: {
-				files: ['<%= config.app %>/scripts/{,*/}*.js'],
+				files: [
+					'<%= config.app %>/<%= config.assets %>/js/{,*/}*.js',
+					'!<%= config.app %>/<%= config.assets %>/js/vendor/**/*',
+				],
 				tasks: ['jshint'],
 				options: {
 					livereload: true
@@ -44,7 +47,7 @@ module.exports = function (grunt) {
 				files: ['Gruntfile.js']
 			},
 			styles: {
-				files: ['<%= config.app %>/styles/{,*/}*.css'],
+				files: ['<%= config.app %>/<%= config.assets %>/css/{,*/}*.css'],
 				tasks: [],
 				options: {
 					livereload: true
@@ -56,7 +59,7 @@ module.exports = function (grunt) {
 				},
 				files: [
 					'<%= config.app %>/*.html',
-					'<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+					'<%= config.app %>/<%= config.assets %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
 					'<%= config.app %>/manifest.json',
 					'<%= config.app %>/_locales/{,*/}*.json'
 				]
@@ -113,8 +116,8 @@ module.exports = function (grunt) {
 			},
 			all: [
 				'Gruntfile.js',
-				'<%= config.app %>/scripts/{,*/}*.js',
-				'!<%= config.app %>/scripts/vendor/*',
+				'<%= config.app %>/<%= config.assets %>/js/{,*/}*.js',
+				'!<%= config.app %>/<%= config.assets %>/js/vendor/*',
 				'test/spec/{,*/}*.js'
 			]
 		},
@@ -152,10 +155,10 @@ module.exports = function (grunt) {
 		// Performs rewrites based on rev and the useminPrepare configuration
 		usemin: {
 			options: {
-				assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images']
+				assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/<%= config.assets %>/images']
 			},
 			html: ['<%= config.dist %>/{,*/}*.html'],
-			css: ['<%= config.dist %>/styles/{,*/}*.css']
+			css: ['<%= config.dist %>/<%= config.assets %>/css/{,*/}*.css']
 		},
 
 		// The following *-min tasks produce minifies files in the dist folder
@@ -163,9 +166,9 @@ module.exports = function (grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.app %>/images',
+					cwd: '<%= config.app %>/<%= config.assets %>/images',
 					src: '{,*/}*.{gif,jpeg,jpg,png}',
-					dest: '<%= config.dist %>/images'
+					dest: '<%= config.dist %>/<%= config.assets %>/images'
 				}]
 			}
 		},
@@ -174,9 +177,9 @@ module.exports = function (grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.app %>/images',
+					cwd: '<%= config.app %>/<%= config.assets %>/images',
 					src: '{,*/}*.svg',
-					dest: '<%= config.dist %>/images'
+					dest: '<%= config.dist %>/<%= config.assets %>/images'
 				}]
 			}
 		},
@@ -212,10 +215,10 @@ module.exports = function (grunt) {
 					dest: '<%= config.dist %>',
 					src: [
 						'*.{ico,png,txt}',
-						'images/{,*/}*.{webp,gif}',
+						'<%= config.assets %>/images/{,*/}*.{webp,gif}',
 						'{,*/}*.html',
-						'styles/{,*/}*.css',
-						'styles/fonts/{,*/}*.*',
+						'<%= config.assets %>/css/{,*/}*.css',
+						'<%= config.assets %>/css/fonts/{,*/}*.*',
 						'_locales/{,*/}*.json',
 					]
 				}]
@@ -240,9 +243,9 @@ module.exports = function (grunt) {
 				options: {
 					buildnumber: true,
 					background: {
-						target: 'scripts/background.js',
+						target: '<%= config.assets %>/js/background.js',
 						exclude: [
-							'scripts/chromereload.js'
+							'<%= config.assets %>/js/chromereload.js'
 						]
 					}
 				},

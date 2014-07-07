@@ -3,8 +3,6 @@
 
 > Monitors Apache, Tomcat, packages etc. on DAx environments.
 
-Need more information about Chrome Extension? Please visit [Google Chrome Extension Develpment](http://developer.chrome.com/extensions/devguide.html)
-
 ![](http://rictorres.com/comscore/intro.gif)
 
 
@@ -13,7 +11,7 @@ Need more information about Chrome Extension? Please visit [Google Chrome Extens
 ```
 $ grunt debug
 ```
-Grunt will run with `watch` and `livereload`. Source will be available at `./dist`
+Grunt will run with `watch` and `livereload`. Source will be available at `./app`
 
 1. Go to `chrome://extensions`, enable Developer mode and load app as an unpacked extension
 2. Click on Load unpacked extension
@@ -34,6 +32,10 @@ Source will be compiled to `./dist/`.
 
 ## Support
 - Latest Chrome, Chrome dev and Chrome Canary
+
+
+## Help
+- Need more information about Chrome Extension? Please visit [Google Chrome Extension Develpment](http://developer.chrome.com/extensions/devguide.html)
 
 
 ## Versioning

@@ -4,56 +4,14 @@
 	var DAxMon = DAxMon || {};
 
 	DAxMon.CONFIG = {
-		'server': 'http://dax-dev07:3000',
-		'environments': [
-			{
-				'name': 'dax-dev01',
-				'label': 'DEV01',
-				'addr': '10.11.57.42'
-			},
-			{
-				'name': 'dax-dev03',
-				'label': 'DEV03',
-				'addr': '10.11.57.82'
-			},
-			{
-				'name': 'dax-dev05',
-				'label': 'DEV05',
-				'addr': '10.11.57.202'
-			},
-			{
-				'name': 'dax-dev07',
-				'label': 'DEV07',
-				'addr': '10.11.57.222'
-			},
-			{
-				'name': 'qa01',
-				'label': 'QA01',
-				'addr': '10.11.11.185'
-			},
-			{
-				'name': 'qa03',
-				'label': 'QA03',
-				'addr': '10.11.21.185'
-			},
-			{
-				'name': 'qa04',
-				'label': 'QA04',
-				'addr': '10.11.22.185'
-			},
-			{
-				'name': 'qa05',
-				'label': 'QA05',
-				'addr': '10.11.23.105'
-			}
-		]
+		'server': 'http://dax-dev07:3000'
 	};
 
 	DAxMon.App = {
 
 		init: function() {
 			var self = this;
-			var environments = DAxMon.CONFIG.environments;
+			var environments;
 			var config = {
 				'containers': {
 					'main': $('#render-container')
@@ -65,18 +23,31 @@
 				}
 			};
 
-			self.render(config.templates.main, config.containers.main, {'environments': environments});
+			self.getEnvironments(function(response) {
+				environments = response.environments;
+				self.render(config.templates.main, config.containers.main, {'environments': environments});
 
-			environments.forEach(function(env) {
-				self.getData('/packages?env=' + env.name, function(response) {
-					var container = $('#package-' + env.name);
-					self.render(config.templates.packages, container, {'packages': response});
+				var keys = Object.keys(environments);
 
-					self.getData('/server-status?env=' + env.name, function(response) {
-						var container = $('#status-' + env.name);
-						self.render(config.templates.status, container, {'status': response});
+				keys.forEach(function(key) {
+					self.getData('/packages?env=' + environments[key].name, function(response) {
+						var container = $('#package-' + environments[key].name);
+						self.render(config.templates.packages, container, {'packages': response});
+
+						self.getData('/server-status?env=' + environments[key].name, function(response) {
+							var container = $('#status-' + environments[key].name);
+							self.render(config.templates.status, container, {'status': response});
+						});
 					});
 				});
+			});
+		},
+
+		getEnvironments: function(callback) {
+			$.ajax({
+				url: DAxMon.CONFIG.server + '/envs'
+			}).success(function(response) {
+				callback(response);
 			});
 		},
 

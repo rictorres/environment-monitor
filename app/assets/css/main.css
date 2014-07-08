@@ -45,6 +45,7 @@
 }
 
 .package td,
+.package th,
 .server-status td {
 	padding: 5px 10px !important;
 }

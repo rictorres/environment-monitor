@@ -51,8 +51,13 @@
 							<strong>{{env.label}}</strong>
 						</h1>
 					</div>
-					<table class="package table table-condensed table-hover" id="package-{{env.name}}">
-						<tbody>
+					<table class="package table table-condensed table-hover">
+						<thead>
+							<th>Repo</th>
+							<th class="text-center">Branch</th>
+							<th class="text-right">Rev</th>
+						</thead>
+						<tbody id="package-{{env.name}}">
 							<tr>
 								<td>Loading packages...</td>
 							</tr>
@@ -67,15 +72,13 @@
 		</script>
 
 		<script id="template-packages" type="html/template">
-				<tbody>
-				{% for package in packages %}
-					<tr>
-						<td>{{package.repo}}</td>
-						<td class="text-center">{{package.branch}}</td>
-						<td class="text-right">{{package.revision}}</td>
-					</tr>
-				{% endfor %}
-				</tbody>
+			{% for package in packages %}
+				<tr>
+					<td>{{package.repo}}</td>
+					<td class="text-center">{{package.branch}}</td>
+					<td class="text-right">{{package.revision}}</td>
+				</tr>
+			{% endfor %}
 		</script>
 
 		<script id="template-status" type="html/template">

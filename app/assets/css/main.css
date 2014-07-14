@@ -4,12 +4,11 @@
 	min-height: 300px;
 }
 
-.navbar-brand span {
+.navbar-brand .glyphicon-refresh {
 	visibility: hidden;
-	font-size: 12px;
 }
 
-.navbar-brand:hover span {
+.navbar-brand:hover .glyphicon-refresh {
 	visibility: visible;
 }
 
@@ -48,4 +47,19 @@
 .package th,
 .server-status td {
 	padding: 5px 10px !important;
+}
+
+.glyphicon-star,
+.glyphicon-star-empty {
+	color: #FFA500;
+}
+
+.glyphicon-flag {
+	color: #20B2AA;
+	display: inline-block;
+	margin: 0 2px;
+}
+
+.glyphicon-fire {
+	color: #FF4500;
 }

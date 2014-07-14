@@ -29,7 +29,7 @@
 			<div class="navbar navbar-inverse">
 				<div class="container">
 					<div class="navbar-header">
-						<a href="" class="navbar-brand">DAx Environment Monitor <span>[refresh]</span></a>
+						<a href="" class="navbar-brand">DAx Environment Monitor <i class="glyphicon glyphicon-refresh"></i></a>
 					</div>
 				</div>
 			</div>
@@ -48,7 +48,17 @@
 				<div id="{{env.name}}" class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<strong>{{env.label}}</strong>
+							<strong>
+								{{env.label}}
+
+								{% if env.hasUnique %}
+								<div title="This environment contains an unique latest package!" class="glyphicon glyphicon-flag"></div>
+								{% endif %}
+
+								{% if env.onFire %}
+								<div title="All packages are latest version!" class="glyphicon glyphicon-fire"></div>
+								{% endif %}
+							</strong>
 						</h1>
 					</div>
 					<table class="package table table-condensed table-hover">
@@ -76,7 +86,16 @@
 				<tr>
 					<td>{{package.repo}}</td>
 					<td class="text-center">{{package.branch}}</td>
-					<td class="text-right">{{package.revision}}</td>
+					<td class="text-right">
+						{% if package.latest %}
+							{% if package.unique %}
+							<span title="Latest package of its kind, only in this environment!" class='glyphicon glyphicon-star'></span>
+							{% else %}
+							<span title="Latest package of its kind!" class="glyphicon glyphicon-star-empty"></span>
+							{% endif %}
+						{% endif %}
+						{{package.revision}}
+					</td>
 				</tr>
 			{% endfor %}
 		</script>

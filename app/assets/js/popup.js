@@ -8,10 +8,10 @@
 	};
 
 	DAxMon.App = {
+		environements: {},
 
 		init: function() {
 			var self = this;
-			var environments;
 			var config = {
 				'containers': {
 					'main': $('#render-container')
@@ -24,18 +24,25 @@
 			};
 
 			self.getEnvironments(function(response) {
-				environments = response.environments;
-				self.render(config.templates.main, config.containers.main, {'environments': environments});
+				self.environments = response.environments;
+				self.render(config.templates.main, config.containers.main, {'environments': self.environments});
 
-				var keys = Object.keys(environments);
+				var env = 0,
+					keys = Object.keys(self.environments);
 
 				keys.forEach(function(key) {
-					self.getData('/packages?env=' + environments[key].name, function(response) {
-						var container = $('#package-' + environments[key].name);
+					self.getData('/packages?env=' + self.environments[key].name, function(response) {
+						var container = $('#package-' + self.environments[key].name);
+						self.environments[key].data = response;
 						self.render(config.templates.packages, container, {'packages': response});
 
-						self.getData('/server-status?env=' + environments[key].name, function(response) {
-							var container = $('#status-' + environments[key].name);
+						env++;
+						if (env === keys.length) {
+							self.enhanceEnvironements();
+						}
+
+						self.getData('/server-status?env=' + self.environments[key].name, function(response) {
+							var container = $('#status-' + self.environments[key].name);
 							self.render(config.templates.status, container, {'status': response});
 						});
 					});
@@ -49,6 +56,88 @@
 			}).success(function(response) {
 				callback(response);
 			});
+		},
+
+		enhanceEnvironements: function() {
+			var self = this,
+				latestRevisionNumbers = { //number, count
+					'Server': [0, 0],
+					'GUI': [0, 0],
+					'Focus': [0, 0],
+					'Dashboards': [0, 0]
+				};
+
+			function getLatestRevisionNumber(env) {
+				for (var i = env.data.length - 1; i >= 0; i--) {
+					var revision = parseInt(env.data[i].revision),
+						latest = latestRevisionNumbers[env.data[i].repo];
+
+					if (revision > latest[0]) {
+						latestRevisionNumbers[env.data[i].repo] = [revision, 1];
+					} else if (revision === latest[0]) {
+						latestRevisionNumbers[env.data[i].repo][1]++;
+					}
+				}
+			}
+
+			function checkForLatestAndUniqueRevisions(env) {
+				var isPackageModified = false,
+					isEnvModified = false;
+
+				for (var i = env.data.length - 1; i >= 0; i--) {
+					var latest = latestRevisionNumbers[env.data[i].repo];
+
+					if (parseInt(env.data[i].revision) === latest[0]) {
+						env.data[i].latest = true;
+						isPackageModified = true;
+
+						if (latest[1] === 1) {
+							env.data[i].unique = true;
+							env.hasUnique = true;
+							isEnvModified = true;
+						}
+					}
+				}
+
+				if (isPackageModified) {
+					self.render($('#template-packages').html(), $('#package-' + env.name), {'packages': env.data});
+				}
+				if (isEnvModified) {
+					self.render($('#template-envs').html(), $('#render-container'), {'environments': self.environments});
+					renderPackages();
+				}
+			}
+
+			function checkForPerfectEnvironments(env) {
+				for (var i = env.data.length - 1; i >= 0; i--) {
+					if (!env.data[i].latest) {
+						return;
+					}
+				}
+
+				env.onFire = true;
+				self.render($('#template-envs').html(), $('#render-container'), {'environments': self.environments});
+				renderPackages();
+			}
+
+			function renderPackages() {
+				for (var key in self.environments) {
+					var env = self.environments[key];
+					self.render($('#template-packages').html(), $('#package-' + env.name), {'packages': env.data});
+				}
+			}
+
+			for (var key1 in this.environments) {
+				getLatestRevisionNumber(this.environments[key1]);
+			}
+
+			for (var key2 in this.environments) {
+				checkForLatestAndUniqueRevisions(this.environments[key2]);
+			}
+
+			for (var key3 in this.environments) {
+				checkForPerfectEnvironments(this.environments[key3]);
+			}
 		},
 
 		render: function(template, container, data) {
@@ -114,7 +203,7 @@
 								index = 2;
 								break;
 						}
-					} else if (splittedPackageName[1] === "dashboards") {
+					} else if (splittedPackageName[1] === 'dashboards') {
 						formatted.repo = 'Dashboards';
 						index = 3;
 					}

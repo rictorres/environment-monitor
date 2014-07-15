@@ -8,7 +8,7 @@
 	};
 
 	DAxMon.App = {
-		environements: {},
+		environments: {},
 
 		init: function() {
 			var self = this;
@@ -38,7 +38,7 @@
 
 						env++;
 						if (env === keys.length) {
-							self.enhanceEnvironements();
+							self.enhanceEnvironments();
 						}
 
 						self.getData('/server-status?env=' + self.environments[key].name, function(response) {
@@ -58,7 +58,7 @@
 			});
 		},
 
-		enhanceEnvironements: function() {
+		enhanceEnvironments: function() {
 			var self = this,
 				latestRevisionNumbers = { //number, count
 					'Server': [0, 0],

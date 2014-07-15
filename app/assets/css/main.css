@@ -18,6 +18,7 @@
 
 .panel-title {
 	font-size: 14px;
+	display: inline-block;
 }
 
 .panel-footer {
@@ -49,6 +50,10 @@
 	padding: 5px 10px !important;
 }
 
+.glyphicon {
+	display: inline-block;
+}
+
 .glyphicon-star,
 .glyphicon-star-empty {
 	color: #FFA500;
@@ -56,8 +61,7 @@
 
 .glyphicon-flag {
 	color: #20B2AA;
-	display: inline-block;
-	margin: 0 2px;
+	margin-right: 2px;
 }
 
 .glyphicon-fire {

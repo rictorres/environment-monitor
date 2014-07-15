@@ -48,17 +48,15 @@
 				<div id="{{env.name}}" class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<strong>
-								{{env.label}}
+							<strong>{{env.label}}</strong>
 
-								{% if env.hasUnique %}
-								<div title="This environment contains an unique latest package!" class="glyphicon glyphicon-flag"></div>
-								{% endif %}
+							{% if env.hasUnique %}
+							<span title="This environment contains an unique latest package!" class="glyphicon glyphicon-flag"></span>
+							{% endif %}
 
-								{% if env.onFire %}
-								<div title="All packages are latest version!" class="glyphicon glyphicon-fire"></div>
-								{% endif %}
-							</strong>
+							{% if env.onFire %}
+							<span title="All packages are latest version!" class="glyphicon glyphicon-fire"></span>
+							{% endif %}
 						</h1>
 					</div>
 					<table class="package table table-condensed table-hover">

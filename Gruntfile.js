@@ -19,6 +19,7 @@ module.exports = function (grunt) {
 		app: 'app',
 		dist: 'dist',
 		assets: 'assets',
+		bower: 'bower_components',
 		manifest: grunt.file.readJSON('app/manifest.json')
 	};
 
@@ -208,20 +209,34 @@ module.exports = function (grunt) {
 		// Copies remaining files to places other tasks can use
 		copy: {
 			dist: {
-				files: [{
-					expand: true,
-					dot: true,
-					cwd: '<%= config.app %>',
-					dest: '<%= config.dist %>',
-					src: [
-						'*.{ico,png,txt}',
-						'<%= config.assets %>/images/{,*/}*.{webp,gif}',
-						'{,*/}*.html',
-						'<%= config.assets %>/css/{,*/}*.css',
-						'<%= config.assets %>/css/fonts/{,*/}*.*',
-						'_locales/{,*/}*.json',
-					]
-				}]
+				files: [
+					{
+						expand: true,
+						dot: true,
+						cwd: '<%= config.app %>',
+						dest: '<%= config.dist %>',
+						src: [
+							'*.{ico,png,txt}',
+							'<%= config.assets %>/images/{,*/}*.{webp,gif}',
+							'{,*/}*.html',
+							'<%= config.assets %>/css/{,*/}*.css',
+							'<%= config.assets %>/css/fonts/{,*/}*.*',
+							'_locales/{,*/}*.json',
+						]
+					},
+					{
+						expand: true,
+						dot: true,
+						cwd: '<%= config.app %>',
+						dest: '<%= config.dist %>/<%= config.assets %>/css',
+						src: [
+							'<%= config.bower %>/*/fonts/*.*'
+						],
+						rename: function(dest, src) {
+							return dest + src.replace('bower_components/bootstrap', '');
+						}
+					}
+				]
 			}
 		},
 

@@ -58,9 +58,7 @@
 		render: function(template, container, data, callback) {
 			var rendered = Ashe.parse(template, data);
 			container.html(rendered);
-			if (callback) {
-				callback();
-			}
+			callback && callback();
 		},
 
 		beautify: function(response) {
@@ -121,13 +119,13 @@
 		getEnvData: function(query, callback) {
 			var self = this;
 
-			jQuery.ajax({
+			$.ajax({
 				url: self.config.server + query
 			}).success(function(response) {
 				if (response.hostAddress) {
 					delete response.hostAddress;
 				}
-				callback(self.beautify(response));
+				callback && callback(self.beautify(response));
 			});
 		},
 
@@ -136,12 +134,12 @@
 
 			DAxMon.Database.get('environments', function(data) {
 				if (data.environments && Object.keys(data.environments).length > 0) {
-					callback(data);
+					callback && callback(data);
 				} else {
-					jQuery.ajax({
+					$.ajax({
 						url: self.config.server + '/envs'
 					}).success(function(response) {
-						callback(response);
+						callback && callback(response);
 					});
 				}
 			});
@@ -151,33 +149,25 @@
 	window.DAxMon.Database = {
 		get: function(key, callback) {
 			chrome.storage.local.get(key, function(data) {
-				if (callback) {
-					callback(data);
-				}
+				callback && callback(data);
 			});
 		},
 
 		set: function(object, callback) {
 			chrome.storage.local.set(object, function() {
-				if (callback) {
-					callback();
-				}
+				callback && callback();
 			});
 		},
 
 		remove: function(key, callback) {
 			chrome.storage.local.remove(key, function() {
-				if (callback) {
-					callback();
-				}
+				callback && callback();
 			});
 		},
 
 		clear: function(callback) {
 			chrome.storage.local.clear(function() {
-				if (callback) {
-					callback();
-				}
+				callback && callback();
 			});
 		}
 	};

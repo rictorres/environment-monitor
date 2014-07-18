@@ -17,6 +17,8 @@
 	"strict": true,
 	"trailing": true,
 	"smarttabs": true,
+	"quotmark": "single",
+	"expr": true,
 	"globals" : {
 		"chrome": true,
 		"jQuery": true

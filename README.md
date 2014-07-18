@@ -1,14 +1,17 @@
-# DAx Environment Monitor
+# Environment Monitor
 
 
-> Monitors Apache, Tomcat, packages etc. on DAx environments.
+> Monitors Apache, Tomcat, packages etc. on environments.
 
 ![](http://rictorres.com/comscore/intro.gif)
 
 
 ## Developing
 
+Clone this repo `git clone https://github.com/rictorres/environment-monitor.git` or download the [zipball](https://github.com/rictorres/environment-monitor/archive/master.zip).
+Open your terminal and type:
 ```
+$ cd environment-monitor
 $ npm install
 $ bower install
 $ grunt debug
@@ -22,22 +25,23 @@ Grunt will run with `watch` and `livereload`. Source will be available at `./app
 
 ## Building
 
-Clone this repo `git clone https://github.com/rictorres/dax-env-monitor.git` or download the [zipball](https://github.com/rictorres/dax-env-monitor/archive/master.zip).
+Clone this repo `git clone https://github.com/rictorres/environment-monitor.git` or download the [zipball](https://github.com/rictorres/environment-monitor/archive/master.zip).
 Open your terminal and type:
 ```
-$ cd dax-env-monitor
+$ cd environment-monitor
 $ npm install
+$ bower install
 $ grunt build
 ```
 Source will be compiled to `./dist/`.
 
 
 ## Support
-- Latest Chrome, Chrome dev and Chrome Canary
+- Latest Chrome Dev and Chrome Canary
 
 
 ## Help
-- Need more information about Chrome Extension? Please visit [Google Chrome Extension Develpment](http://developer.chrome.com/extensions/devguide.html)
+- Need more information about Chrome Extensions? Please visit [Google Chrome Extension Development](http://developer.chrome.com/extensions/devguide.html)
 
 
 ## Versioning

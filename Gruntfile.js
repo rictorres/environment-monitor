@@ -149,7 +149,8 @@ module.exports = function (grunt) {
 			},
 			html: [
 				'<%= config.app %>/popup.html',
-				'<%= config.app %>/options.html'
+				'<%= config.app %>/options.html',
+				'<%= config.app %>/background.html'
 			]
 		},
 
@@ -228,7 +229,7 @@ module.exports = function (grunt) {
 						expand: true,
 						dot: true,
 						cwd: '<%= config.app %>',
-						dest: '<%= config.dist %>/<%= config.assets %>/css',
+						dest: '<%= config.dist %>/<%= config.assets %>',
 						src: [
 							'<%= config.bower %>/*/fonts/*.*'
 						],

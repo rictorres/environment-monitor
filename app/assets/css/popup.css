@@ -1,0 +1,82 @@
+.wrap {
+	position: relative;
+	min-width: 600px;
+	min-height: 300px;
+}
+
+.navbar-brand .glyphicon-refresh {
+	visibility: hidden;
+}
+
+.navbar-brand:hover .glyphicon-refresh {
+	visibility: visible;
+}
+
+.panel-heading {
+	padding: 8px 10px;
+	display: block;
+	cursor: pointer;
+}
+
+.panel-title {
+	font-size: 14px;
+	/*display: inline-block;*/
+}
+
+.panel-footer {
+	padding: 10px;
+	background: none;
+	font-size: 12px;
+}
+
+.panel-footer .alert {
+	margin-bottom: 0;
+	text-align: center;
+	padding: 6px 8px;
+	font-size: 10px;
+}
+
+.loading {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.package,
+.server-status {
+	font-size: 13px;
+}
+
+.package td,
+.package th,
+.server-status td {
+	padding: 5px 10px !important;
+}
+
+.glyphicon {
+	display: inline-block;
+	font-size: 12px;
+}
+
+.glyphicon-star,
+.glyphicon-star-empty {
+	color: #FFA500;
+}
+
+.glyphicon-flag {
+	color: #20B2AA;
+	margin-left: 2px;
+}
+
+.glyphicon-fire {
+	color: #FF4500;
+}
+
+.default-environment {
+	position: absolute;
+	right: 26px;
+	display: inline-block;
+}
+
+.default-environment input {
+	cursor: pointer;
+}

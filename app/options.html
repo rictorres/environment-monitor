@@ -1,14 +1,18 @@
 <!doctype html>
 <html>
+
 	<head>
+		<meta charset="utf-8">
+		<title>DAx Environment Monitor - Options</title>
+
 		<!-- build:css assets/css/vendor.css -->
 		<!-- bower:css -->
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 		<!-- endbower -->
 		<!-- endbuild -->
 
-		<!-- build:css assets/css/main.css -->
-		<link href="assets/css/main.css" rel="stylesheet">
+		<!-- build:css assets/css/options.css -->
+		<link rel="stylesheet" href="assets/css/options.css">
 		<!-- endbuild -->
 
 		<!-- build:js assets/js/vendor.js -->
@@ -22,7 +26,47 @@
 		<script src="assets/js/options.js"></script>
 		<!-- endbuild -->
 	</head>
+
 	<body>
-		<h1>Coming soon!</h1>
+		<div class="container">
+			<header class="row">
+				<div class="col-xs-12">
+					<h1 class="logo text-center">
+						<img src="assets/images/icon-128.png" width="50" alt="DAx Environment Monitor">
+					</h1>
+				</div>
+			</header>
+
+			<section class="row content">
+				<div class="col-xs-12">
+					<form class="form-horizontal" id="options-form" role="form">
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="default-environment">Default Environment</label>
+							<div class="col-sm-8">
+								<select class="form-control" name="default-environment" id="default-environment"></select>
+								<p>- its status will be shown on the extension icon
+									<br>
+									- you will receive desktop notifications when something changes</p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+
+			<footer class="row footer">
+				<div class="col-xs-12">
+					<p id="app-version" class="text-center"></p>
+					<p class="text-center no-margin">&copy; Copyright 2014</p>
+				</div>
+			</footer>
+
+		</div>
+		<script id="template-envs" type="html/template">
+			<option value="none">None</option>
+			{% for env in environments %}
+				<option value="{{env.name}}">{{env.label}}</option>
+			{% endfor %}
+		</script>
 	</body>
+
 </html>

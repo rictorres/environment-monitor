@@ -1,33 +1,32 @@
 {
-    "name": "__MSG_appName__",
-    "version": "0.1.6",
-    "manifest_version": 2,
-    "description": "__MSG_appDescription__",
-    "icons": {
-        "16": "assets/images/icon-16.png",
-        "128": "assets/images/icon-128.png"
-    },
-    "default_locale": "en",
-    "background": {
-        "scripts": [
-            "assets/js/chromereload.js",
-            "assets/js/background.js"
-        ]
-    },
-    "permissions": [
-        "http://10.11.57.222/",
-        "http://10.11.57.222:3000/",
-        "http://dax-dev07/",
-        "http://dax-dev07:3000/"
-    ],
-    "browser_action": {
-        "default_icon": {
-            "16": "assets/images/icon-16.png",
-            "19": "assets/images/icon-19.png",
-            "38": "assets/images/icon-38.png"
-        },
-        "default_title": "DAx Environment Monitor",
-        "default_popup": "popup.html"
-    },
-    "options_page": "options.html"
+	"name": "__MSG_appName__",
+	"version": "0.2.0",
+	"manifest_version": 2,
+	"description": "__MSG_appDescription__",
+	"icons": {
+		"16": "assets/images/icon-16.png",
+		"128": "assets/images/icon-128.png"
+	},
+	"default_locale": "en",
+	"background": {
+		"page": "background.html"
+	},
+	"permissions": [
+		"notifications",
+		"storage",
+		"http://10.11.57.222/",
+		"http://10.11.57.222:3000/",
+		"http://dax-dev07/",
+		"http://dax-dev07:3000/"
+	],
+	"browser_action": {
+		"default_icon": {
+			"16": "assets/images/icon-16.png",
+			"19": "assets/images/icon-19.png",
+			"38": "assets/images/icon-38.png"
+		},
+		"default_title": "DAx Environment Monitor",
+		"default_popup": "popup.html"
+	},
+	"options_page": "options.html"
 }

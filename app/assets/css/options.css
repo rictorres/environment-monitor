@@ -1,0 +1,31 @@
+body {
+	background-color: #f0f0f0;
+}
+
+.container {
+	max-width: 600px;
+}
+
+.logo {
+	margin: 30px 0;
+}
+
+.content {
+	background-color: #fff;
+	border: 1px solid #cacaca;
+	padding: 90px 30px;
+	box-shadow: 0 1px 0 #fff;
+	border-radius: 5px;
+}
+
+form p {
+	font-size: 12px;
+}
+
+p {
+	margin: 10px 0 0;
+}
+
+.no-margin {
+	margin: 0;
+}

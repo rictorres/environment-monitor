@@ -256,7 +256,7 @@ module.exports = function (grunt) {
 		chromeManifest: {
 			dist: {
 				options: {
-					buildnumber: true,
+					buildnumber: false,
 					background: {
 						target: '<%= config.assets %>/js/background.js',
 						exclude: [
@@ -300,6 +300,7 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('build', [
+		'jshint',
 		'clean:dist',
 		'chromeManifest:dist',
 		'useminPrepare',

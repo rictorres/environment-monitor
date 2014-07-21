@@ -61,17 +61,12 @@ And constructed with the following guidelines:
 For more information on SemVer, please visit [http://semver.org/](http://semver.org/).
 
 
-## Author
+## Authors
 
-![Hi](http://gravatar.com/avatar/414738201197c2a837b986748c80e16e?s=90)
-
-**Ricardo Torres** (Front-end Engineer)
-
-- [http://rictorres.com](http://rictorres.com)
-- [http://twitter.com/RicardoTorres0](http://twitter.com/RicardoTorres0)
-- [http://github.com/rictorres](http://github.com/rictorres)
+- [Ricardo Torres](http://github.com/rictorres)
+- [Tamer Aydin](https://github.com/tameraydin)
 
 
 ## License
 
-[MIT License](http://rictorres.mit-license.org/) © Ricardo Torres
+[MIT License](http://rictorres.mit-license.org/)

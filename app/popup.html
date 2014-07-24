@@ -1,9 +1,9 @@
 <!doctype html>
-<html>
+<html ng-app="EnvMonitor" ng-csp>
 
 	<head>
 		<meta charset="utf-8">
-		<title>DAx Environment Monitor</title>
+		<title>Environment Monitor</title>
 
 		<!-- build:css assets/css/vendor.css -->
 		<!-- bower:css -->
@@ -18,6 +18,8 @@
 		<!-- build:js assets/js/vendor.js -->
 		<!-- bower:js -->
 		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
 		<!-- endbower -->
 		<script src="assets/js/vendor/ashe.js"></script>
 		<!-- endbuild -->
@@ -27,7 +29,7 @@
 		<!-- endbuild -->
 	</head>
 
-	<body>
+	<body ng-controller="PopupCtrl">
 		<div class="wrap">
 			<div class="navbar navbar-inverse">
 				<div class="container">
@@ -37,9 +39,23 @@
 				</div>
 			</div>
 			<div class="container">
-				<div class="row" id="render-container">
-					<div class="col-xs-12">
+				<div class="row">
+					<div ng-if="loading" class="col-xs-12">
 						<p class="loading lead">Loading...</p>
+					</div>
+					<div ng-if="!loading">
+						<div class="col-xs-6" ng-repeat="env in environments">
+							<div id="{{env.name}}" class="panel panel-default">
+								<label for="default-environment-{{env.name}}" class="panel-heading">
+									<h1 class="panel-title">
+										<strong>{{env.label}}</strong>
+									</h1>
+								</label>
+								<div class="server-status panel-footer" id="status-{{env.name}}">
+									<p>Loading status...</p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

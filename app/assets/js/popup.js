@@ -1,5 +1,48 @@
-(function(window, document, $, Ashe, undefined) {
+(function(window, document, $, Ashe, angular, undefined) {
 	'use strict';
+
+	angular
+		.module('EnvMonitor', []);
+
+	var EnvMonitor = angular.module('EnvMonitor');
+
+	EnvMonitor
+		.factory('Database', [function() {
+			return chrome.extension.getBackgroundPage().DAxMon.Database;
+		}])
+
+		.factory('Background', [function() {
+			return chrome.extension.getBackgroundPage().DAxMon.Background;
+		}])
+
+		.controller('PopupCtrl', ['$scope', 'Background', function ($scope, Background) {
+			$scope.loading = true;
+
+			Background.getEnvironments(function(response) {
+				$scope.environments = response.environments;
+
+				var envCounter = 0,
+					keys = Object.keys(response.environments);
+
+				keys.forEach(function(key) {
+					Background.getEnvData('/packages?env=' + response.environments[key].name, function(response) {
+						$scope.environments[key].data = response;
+
+						envCounter++;
+						if (envCounter === keys.length) {
+							//self.enhanceEnvironments(config);
+							$scope.loading = false;
+							$scope.$apply();
+						}
+
+						// Background.getEnvData('/server-status?env=' + self.environments[key].name, function(response) {
+						// 	var container = $('#status-' + self.environments[key].name);
+						// 	Background.render(config.templates.status, container, {'status': response});
+						// });
+					});
+				});
+			});
+		}]);
 
 	var Database = chrome.extension.getBackgroundPage().DAxMon.Database;
 	var Background = chrome.extension.getBackgroundPage().DAxMon.Background;
@@ -160,4 +203,4 @@
 		Popup.init();
 	});
 
-}(this, this.document, this.jQuery, this.Ashe));
+}(this, this.document, this.jQuery, this.Ashe, this.angular));

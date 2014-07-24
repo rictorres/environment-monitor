@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="Options" ng-csp>
 
 	<head>
 		<meta charset="utf-8">
@@ -21,7 +21,6 @@
 		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<!-- endbower -->
-		<script src="assets/js/vendor/ashe.js"></script>
 		<!-- endbuild -->
 
 		<!-- build:js assets/js/options.js -->
@@ -29,12 +28,12 @@
 		<!-- endbuild -->
 	</head>
 
-	<body>
+	<body ng-controller="OptionsCtrl">
 		<div class="container">
 			<header class="row">
 				<div class="col-xs-12">
 					<h1 class="logo text-center">
-						<img src="assets/images/icon-128.png" width="50" alt="DAx Environment Monitor">
+						<img src="assets/images/icon-128.png" width="50" alt="Environment Monitor">
 					</h1>
 				</div>
 			</header>
@@ -45,7 +44,10 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label" for="default-environment">Default Environment</label>
 							<div class="col-sm-8">
-								<select class="form-control" name="default-environment" id="default-environment"></select>
+								<select class="form-control" name="default-environment" ng-model="defaultEnvironment" ng-change="updateDefaultEnv()">
+									<option value="none">None</option>
+									<option ng-repeat="env in environments" value="{{env.name}}" ng-selected="env.name === defaultEnvironment">{{env.label}}</option>
+								</select>
 								<p>- its status will be shown on the extension icon
 									<br>
 									- you will receive desktop notifications when something changes</p>
@@ -57,18 +59,12 @@
 
 			<footer class="row footer">
 				<div class="col-xs-12">
-					<p id="app-version" class="text-center"></p>
+					<p class="text-center">{{appVersion}}</p>
 					<p class="text-center no-margin">&copy; Copyright 2014</p>
 				</div>
 			</footer>
 
 		</div>
-		<script id="template-envs" type="html/template">
-			<option value="none">None</option>
-			{% for env in environments %}
-				<option value="{{env.name}}">{{env.label}}</option>
-			{% endfor %}
-		</script>
 	</body>
 
 </html>

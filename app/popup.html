@@ -21,7 +21,6 @@
 		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<!-- endbower -->
-		<script src="assets/js/vendor/ashe.js"></script>
 		<!-- endbuild -->
 
 		<!-- build:js assets/js/popup.js -->
@@ -45,14 +44,45 @@
 					</div>
 					<div ng-if="!loading">
 						<div class="col-xs-6" ng-repeat="env in environments">
-							<div id="{{env.name}}" class="panel panel-default">
-								<label for="default-environment-{{env.name}}" class="panel-heading">
+							<div class="panel panel-default">
+								<label class="panel-heading" ng-click="selectEnv(env.id)">
 									<h1 class="panel-title">
-										<strong>{{env.label}}</strong>
+										<strong>{{env.title}}</strong>
+										<span ng-if="env.hasUnique" title="This environment contains an unique latest package!" class="glyphicon glyphicon-flag"></span>
+										<span ng-if="env.onFire" title="All packages are latest version!" class="glyphicon glyphicon-fire"></span>
+										<span class="default-environment"><input ng-model="selectedEnvId" type="radio" class="default-environment-radio" name="defaultEnvironment" value="{{env.id}}"></span>
 									</h1>
 								</label>
-								<div class="server-status panel-footer" id="status-{{env.name}}">
-									<p>Loading status...</p>
+								<table class="package table table-condensed table-hover">
+									<thead ng-if="env.packages">
+										<th>Repo</th>
+										<th class="text-center">Branch</th>
+										<th class="text-right">Rev</th>
+									</thead>
+									<tbody>
+										<tr ng-if="!env.packages">
+											<td><p>Loading status...</p><td>
+										</tr>
+										<tr ng-if="env.packages" ng-repeat="package in env.packages">
+											<td>{{package.repo}}</td>
+											<td class="text-center">{{package.branch}}</td>
+											<td class="text-right">
+												<span ng-if="package.unique" title="Latest package of its kind, only in this environment!" class='glyphicon glyphicon-star'></span>
+												<span ng-if="package.latest && !package.unique" title="Latest package of its kind!" class="glyphicon glyphicon-star-empty"></span>
+												{{package.revision}}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="server-status panel-footer">
+									<p ng-if="!env.services">Loading status...</p>
+									<div class="row" ng-if="env.services">
+										<div class="col-xs-{{12/env.services.length}}" ng-repeat="service in env.services">
+											<div class="alert" ng-class="{'alert-success': service.online, 'alert-danger': !service.online}">
+												<strong>{{service.title}}</strong>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -60,79 +90,5 @@
 				</div>
 			</div>
 		</div>
-
-		<script id="template-envs" type="html/template">
-			{% for env in environments %}
-			<div class="col-xs-6">
-				<div id="{{env.name}}" class="panel panel-default">
-					<label for="default-environment-{{env.name}}" class="panel-heading">
-						<h1 class="panel-title">
-							<strong>{{env.label}}</strong>
-
-							{% if env.hasUnique %}
-							<span title="This environment contains an unique latest package!" class="glyphicon glyphicon-flag"></span>
-							{% endif %}
-
-							{% if env.onFire %}
-							<span title="All packages are latest version!" class="glyphicon glyphicon-fire"></span>
-							{% endif %}
-
-							<span class="default-environment"><input type="radio" class="default-environment-radio" name="defaultEnvironment" id="default-environment-{{env.name}}" value="{{env.name}}"></span>
-						</h1>
-					</label>
-					<table class="package table table-condensed table-hover">
-						<thead>
-							<th>Repo</th>
-							<th class="text-center">Branch</th>
-							<th class="text-right">Rev</th>
-						</thead>
-						<tbody id="package-{{env.name}}">
-							<tr>
-								<td>Loading packages...</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="server-status panel-footer" id="status-{{env.name}}">
-						<p>Loading status...</p>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-		</script>
-
-		<script id="template-packages" type="html/template">
-			{% for package in packages %}
-				<tr>
-					<td>{{package.repo}}</td>
-					<td class="text-center">{{package.branch}}</td>
-					<td class="text-right">
-						{% if package.latest %}
-							{% if package.unique %}
-							<span title="Latest package of its kind, only in this environment!" class='glyphicon glyphicon-star'></span>
-							{% else %}
-							<span title="Latest package of its kind!" class="glyphicon glyphicon-star-empty"></span>
-							{% endif %}
-						{% endif %}
-						{{package.revision}}
-					</td>
-				</tr>
-			{% endfor %}
-		</script>
-
-		<script id="template-status" type="html/template">
-			<div class="row">
-				<div class="col-xs-6">
-					<div class="alert alert-{{status.apacheStatus.class}}">
-						<strong>Apache</strong>
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div class="alert alert-{{status.tomcatStatus.class}}">
-						<strong>Tomcat</strong>
-					</div>
-				</div>
-			</div>
-		</script>
 	</body>
-
 </html>

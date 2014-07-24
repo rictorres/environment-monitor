@@ -1,43 +1,42 @@
-(function(window, document, $, Ashe, undefined) {
+(function(window, document, $, angular, undefined) {
 	'use strict';
 
-	var Database = chrome.extension.getBackgroundPage().DAxMon.Database;
-	var Background = chrome.extension.getBackgroundPage().DAxMon.Background;
+	angular
+		.module('Options', []);
 
-	var Options = {
-		init: function() {
-			var selectContainer = $('#default-environment');
+	var EnvMonitor = angular.module('Options');
+
+	EnvMonitor
+		.factory('Database', [function() {
+			return chrome.extension.getBackgroundPage().DAxMon.Database;
+		}])
+
+		.controller('OptionsCtrl', ['$scope', 'Database', function ($scope, Database) {
 			var manifest = chrome.runtime.getManifest();
+			$scope.appVersion = manifest.version;
+			$scope.environments = [];
+			$scope.defaultEnvironment = 'none';
 
-			$('#app-version').text(manifest.version);
-
-			Database.get(null, function(data) {
-
-				Background.render($('#template-envs').html(), selectContainer, data, function() {
-					if (data.defaultEnvironment) {
-						selectContainer.find('option[value=' + data.defaultEnvironment.name + ']').attr('selected', 'selected');
-					}
-					selectContainer.on('change', function() {
-						var value = $(this).val();
-
-						if (value !== 'none') {
-							var obj = {
-								'defaultEnvironment': {
-									'name': value
-								}
-							};
-							Database.set(obj);
-						} else {
-							Database.remove('defaultEnvironment');
+			$scope.updateDefaultEnv = function() {
+				if ($scope.defaultEnvironment !== 'none') {
+					Database.set({
+						'defaultEnvironment': {
+							'name': $scope.defaultEnvironment
 						}
 					});
-				});
+				} else {
+					Database.remove('defaultEnvironment');
+				}
+			};
+
+			Database.get(null, function(data) {
+				$scope.environments = data.environments;
+				if (data.defaultEnvironment) {
+					$scope.defaultEnvironment = data.defaultEnvironment.name;
+				}
+				$scope.updateDefaultEnv();
+				$scope.$apply();
 			});
-		}
-	};
+		}]);
 
-	$(document).ready(function() {
-		Options.init();
-	});
-
-}(this, this.document, this.jQuery, this.Ashe));
+}(this, this.document, this.jQuery, this.angular));

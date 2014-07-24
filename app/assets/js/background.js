@@ -1,6 +1,6 @@
 /* global DAxMon */
 
-(function(window, document, $, Ashe, undefined) {
+(function(window, document, $, undefined) {
 	'use strict';
 
 	window.DAxMon = window.DAxMon || {};
@@ -53,12 +53,6 @@
 		setBadge: function(color) {
 			chrome.browserAction.setBadgeBackgroundColor({'color': color});
 			chrome.browserAction.setBadgeText({'text': ' '});
-		},
-
-		render: function(template, container, data, callback) {
-			var rendered = Ashe.parse(template, data);
-			container.html(rendered);
-			callback && callback();
 		},
 
 		beautify: function(response) {
@@ -176,4 +170,4 @@
 		DAxMon.Background.init();
 	});
 
-}(this, this.document, this.jQuery, this.Ashe));
+}(this, this.document, this.jQuery));

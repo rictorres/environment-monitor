@@ -35,49 +35,11 @@
 			});
 
 			Background.getEnvironments(function(response) {
-				response = {
-					'environments': [
-						{
-							'id': 'dax-dev01',
-							'title': 'DEV01',
-							'addr': '10.11.57.42'
-						},
-						{
-							'id': 'dax-dev05',
-							'title': 'DEV03',
-							'addr': '10.11.57.82'
-						},
-						{
-							'id': 'qa01',
-							'title': 'QA01',
-							'addr': '10.11.11.185'
-						},
-						{
-							'id': 'qa03',
-							'title': 'QA03',
-							'addr': '10.11.21.185'
-						},
-					]
-				};
 				$scope.environments = response.environments;
 
 				var getDetailsOfEnv = function(env) {
 
 					Background.getEnvData('/server-status?env=' + env.id, function(serviceResponse) {
-						serviceResponse = {
-							'services': [
-								{
-									'id': 'apache',
-									'title': 'Apache',
-									'online': true
-								},
-								{
-									'id': 'tomcat',
-									'title': 'Tomcat',
-									'online': false
-								}
-							]
-						};
 						env.services = serviceResponse.services;
 
 						envServiceCounter++;
@@ -87,20 +49,6 @@
 					});
 
 					Background.getEnvData('/packages?env=' + env.id, function(packageResponse) {
-						packageResponse = {
-							'packages': [
-								{
-									'repo': 'GUI',
-									'branch': 'trunk',
-									'revision': Math.floor((Math.random() * 10) + 1)
-								},
-								{
-									'repo': 'Server',
-									'branch': 'trunk',
-									'revision': Math.floor((Math.random() * 10) + 1)
-								}
-							]
-						};
 						env.packages = packageResponse.packages;
 
 						envPackageCounter++;

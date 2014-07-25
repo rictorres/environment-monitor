@@ -268,7 +268,7 @@ module.exports = function (grunt) {
 		compress: {
 			dist: {
 				options: {
-					archive: 'package/DAx Environment Monitor<%= config.manifest.version %>.zip'
+					archive: 'package/Environment Monitor<%= config.manifest.version %>.zip'
 				},
 				files: [{
 					expand: true,

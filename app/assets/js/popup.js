@@ -1,8 +1,7 @@
 (function(window, document, $, angular, undefined) {
 	'use strict';
 
-	angular
-		.module('EnvMonitor', []);
+	angular.module('EnvMonitor', []);
 
 	var EnvMonitor = angular.module('EnvMonitor');
 
@@ -18,6 +17,7 @@
 		.controller('PopupCtrl', ['$scope', 'Background', 'Database', function ($scope, Background, Database) {
 			$scope.loading = true;
 			$scope.selectedEnvId = null;
+
 			$scope.selectEnv = function(id) {
 				$scope.selectedEnvId = id;
 				Database.set({
@@ -34,22 +34,34 @@
 				}
 			});
 
-			Background.getEnvironments(function(response) {
-				$scope.environments = response.environments;
+			Database.get('environments', function(envResponse) {
+				$scope.environments = envResponse.environments;
 
-				var getDetailsOfEnv = function(env) {
+				var envLength = Object.keys($scope.environments).length;
+				var envPackageCounter = 0;
+				var envServiceCounter = 0;
 
+				console.log($scope.environments, envLength);
+
+				if (envLength > 0) {
+					for (var key in $scope.environments) {
+						getEnvDetails($scope.environments[key]);
+					}
+				}
+
+				function getEnvDetails(env) {
+					console.log('getEnvDetails', env);
 					Background.getEnvData('/server-status?env=' + env.id, function(serviceResponse) {
-						env.services = serviceResponse.services;
+						env.services = serviceResponse;
 
 						envServiceCounter++;
-						if (envServiceCounter === $scope.environments.length) {
+						if (envServiceCounter === envLength) {
 							$scope.$apply();
 						}
 					});
 
 					Background.getEnvData('/packages?env=' + env.id, function(packageResponse) {
-						env.packages = packageResponse.packages;
+						env.packages = packageResponse;
 
 						envPackageCounter++;
 						if (envPackageCounter === 0) {
@@ -57,20 +69,13 @@
 								$scope.latestRevisionNumbers[env.packages[i].repo] = env.packages[i].revision;
 							}
 						}
-						if (envPackageCounter === $scope.environments.length) {
+						if (envPackageCounter === envLength) {
 							$scope.loading = false;
 							$scope.enhanceEnvironments();
 							$scope.$apply();
 						}
 					});
 				};
-
-				var envPackageCounter = 0,
-					envServiceCounter = 0;
-
-				for (var i = 0; i < response.environments.length; i++) {
-					getDetailsOfEnv($scope.environments[i]);
-				}
 			});
 
 			$scope.latestRevisionNumbers = {};

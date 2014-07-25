@@ -18,9 +18,9 @@
 	],
 	"browser_action": {
 		"default_icon": {
-			"16": "assets/images/icon-16.png",
-			"19": "assets/images/icon-19.png",
-			"38": "assets/images/icon-38.png"
+			"16": "assets/images/icon-grey-16.png",
+			"19": "assets/images/icon-grey-19.png",
+			"38": "assets/images/icon-grey-38.png"
 		},
 		"default_title": "Environment Monitor",
 		"default_popup": "popup.html"

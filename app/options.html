@@ -46,7 +46,7 @@
 							<div class="col-sm-8">
 								<select class="form-control" name="default-environment" ng-model="defaultEnvironment" ng-change="updateDefaultEnv()">
 									<option value="none">None</option>
-									<option ng-repeat="env in environments" value="{{env.name}}" ng-selected="env.name === defaultEnvironment">{{env.label}}</option>
+									<option ng-repeat="env in environments" value="{{env.id}}" ng-selected="env.id === defaultEnvironment">{{env.title}}</option>
 								</select>
 								<p>- its status will be shown on the extension icon
 									<br>

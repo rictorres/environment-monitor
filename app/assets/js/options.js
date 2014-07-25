@@ -14,7 +14,7 @@
 		.controller('OptionsCtrl', ['$scope', 'Database', function ($scope, Database) {
 			var manifest = chrome.runtime.getManifest();
 			$scope.appVersion = manifest.version;
-			$scope.environments = [];
+			$scope.environments = {};
 			$scope.defaultEnvironment = 'none';
 
 			$scope.updateDefaultEnv = function() {

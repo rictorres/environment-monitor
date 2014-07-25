@@ -28,19 +28,29 @@
 			var self = this;
 
 			EnvMon.Database.get('defaultEnvironment', function(data) {
+				console.info('Default environment data loaded', data);
 				if (data.defaultEnvironment) {
 					self.getEnvData('/server-status?env=' + data.defaultEnvironment.name, function(response) {
+						console.info('Default environment services status', response);
+						var online = response.some(function(element) {
+							return (element.online !== false);
+						});
 						var obj = {
 							'defaultEnvironment': {
 								'name': data.defaultEnvironment.name,
-								'status': (response.apacheStatus.status === 'running' && response.tomcatStatus.status === 'running') ? 'up' : 'down'
+								'online': online
 							}
 						};
 						EnvMon.Database.set(obj, function() {
-							if (obj.defaultEnvironment.status === 'up') {
+							console.info('Default environment data saved', obj);
+							if (obj.defaultEnvironment.online === true) {
 								self.setBadge('#21BE11');
-							} else {
+							}
+							else if (obj.defaultEnvironment.online === false) {
 								self.setBadge('#DE0B0B');
+							}
+							else {
+								self.setBadge();
 							}
 						});
 					});
@@ -51,62 +61,12 @@
 		},
 
 		setBadge: function(color) {
-			chrome.browserAction.setBadgeBackgroundColor({'color': color});
-			chrome.browserAction.setBadgeText({'text': ' '});
-		},
-
-		beautify: function(response) {
-			var newResponse;
-
-			if ('apacheStatus' in response && 'tomcatStatus' in response) {
-				newResponse = {};
-				for (var processStatus in response) {
-					var notRunning = /NOT_RUNNING/gi.test(response.processStatus);
-					newResponse[processStatus] = {
-						'class': (notRunning ? 'danger' : 'success'),
-						'status': (notRunning ? 'stopped' : 'running')
-					};
-				}
-				return newResponse;
+			if (color) {
+				chrome.browserAction.setBadgeBackgroundColor({'color': color});
+				chrome.browserAction.setBadgeText({'text': ' '});
 			}
-			else if ('packages' in response) {
-				newResponse = [];
-				var regex = /\.noarch/gi;
-				var packagesData = response.packages.replace(/\r?\n|\r/g, '').split(regex);
-
-				for (var i = 0, len = packagesData.length; i < len; i++) {
-					if (packagesData[i] === '') {
-						continue;
-					}
-					var formatted = {};
-					var index;
-					var splittedPackageName = packagesData[i].split('-');
-
-					formatted.branch = splittedPackageName[3];
-					formatted.revision = splittedPackageName[4];
-
-					if (splittedPackageName[1] === 'core') {
-						switch(splittedPackageName[2]) {
-							case 'server':
-								formatted.repo = 'Server';
-								index = 0;
-								break;
-							case 'gui':
-								formatted.repo = 'GUI';
-								index = 1;
-								break;
-							case 'mui':
-								formatted.repo = 'Focus';
-								index = 2;
-								break;
-						}
-					} else if (splittedPackageName[1] === 'dashboards') {
-						formatted.repo = 'Dashboards';
-						index = 3;
-					}
-					newResponse[index] = formatted;
-				}
-				return newResponse;
+			else {
+				chrome.browserAction.setBadgeText({'text': ''});
 			}
 		},
 
@@ -116,10 +76,7 @@
 			$.ajax({
 				url: self.config.server + query
 			}).success(function(response) {
-				if (response.hostAddress) {
-					delete response.hostAddress;
-				}
-				callback && callback(self.beautify(response));
+				callback && callback(response);
 			});
 		},
 

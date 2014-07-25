@@ -1,10 +1,10 @@
 {
 	"appName": {
-		"message": "DAx Environment Monitor",
-		"description": "The name of the application"
+		"message": "Environment Monitor",
+		"description": "Environment Monitor"
 	},
 	"appDescription": {
-		"message": "Monitors Apache, Tomcat, packages etc. on DAx environments",
-		"description": "The description of the application"
+		"message": "Monitors Apache, Tomcat, packages etc. on environments",
+		"description": "Monitors Apache, Tomcat, packages etc. on environments"
 	}
 }

@@ -8,11 +8,11 @@
 
 	EnvMonitor
 		.factory('Database', [function() {
-			return chrome.extension.getBackgroundPage().DAxMon.Database;
+			return chrome.extension.getBackgroundPage().EnvMon.Database;
 		}])
 
 		.factory('Background', [function() {
-			return chrome.extension.getBackgroundPage().DAxMon.Background;
+			return chrome.extension.getBackgroundPage().EnvMon.Background;
 		}])
 
 		.controller('PopupCtrl', ['$scope', 'Background', 'Database', function ($scope, Background, Database) {

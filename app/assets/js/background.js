@@ -1,11 +1,11 @@
-/* global DAxMon */
+/* global EnvMon */
 
 (function(window, document, $, undefined) {
 	'use strict';
 
-	window.DAxMon = window.DAxMon || {};
+	window.EnvMon = window.EnvMon || {};
 
-	DAxMon.Background = {
+	EnvMon.Background = {
 		config: {
 			'server': 'http://dax-dev07:3000'
 		},
@@ -15,7 +15,7 @@
 
 			self.getEnvironments(function(response) {
 				if (Object.keys(response.environments).length > 0) {
-					DAxMon.Database.set(response, function() {
+					EnvMon.Database.set(response, function() {
 						console.log('Environments loaded:', response.environments);
 					});
 				}
@@ -27,7 +27,7 @@
 		check: function() {
 			var self = this;
 
-			DAxMon.Database.get('defaultEnvironment', function(data) {
+			EnvMon.Database.get('defaultEnvironment', function(data) {
 				if (data.defaultEnvironment) {
 					self.getEnvData('/server-status?env=' + data.defaultEnvironment.name, function(response) {
 						var obj = {
@@ -36,7 +36,7 @@
 								'status': (response.apacheStatus.status === 'running' && response.tomcatStatus.status === 'running') ? 'up' : 'down'
 							}
 						};
-						DAxMon.Database.set(obj, function() {
+						EnvMon.Database.set(obj, function() {
 							if (obj.defaultEnvironment.status === 'up') {
 								self.setBadge('#21BE11');
 							} else {
@@ -126,7 +126,7 @@
 		getEnvironments: function(callback) {
 			var self = this;
 
-			DAxMon.Database.get('environments', function(data) {
+			EnvMon.Database.get('environments', function(data) {
 				if (data.environments && Object.keys(data.environments).length > 0) {
 					callback && callback(data);
 				} else {
@@ -140,7 +140,7 @@
 		}
 	};
 
-	window.DAxMon.Database = {
+	window.EnvMon.Database = {
 		get: function(key, callback) {
 			chrome.storage.local.get(key, function(data) {
 				callback && callback(data);
@@ -167,7 +167,7 @@
 	};
 
 	$(document).ready(function() {
-		DAxMon.Background.init();
+		EnvMon.Background.init();
 	});
 
 }(this, this.document, this.jQuery));

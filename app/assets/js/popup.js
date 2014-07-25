@@ -35,47 +35,43 @@
 			});
 
 			Database.get('environments', function(envResponse) {
+				$scope.loading = false;
 				$scope.environments = envResponse.environments;
 
 				var envLength = Object.keys($scope.environments).length;
 				var envPackageCounter = 0;
 				var envServiceCounter = 0;
+				var getEnvDetails = function getEnvDetails(env) {
+						Background.getEnvData('/server-status?env=' + env.id, function(serviceResponse) {
+							env.services = serviceResponse;
 
-				console.log($scope.environments, envLength);
+							envServiceCounter++;
+							if (envServiceCounter === envLength) {
+								$scope.$apply();
+							}
+						});
+
+						Background.getEnvData('/packages?env=' + env.id, function(packageResponse) {
+							env.packages = packageResponse;
+
+							envPackageCounter++;
+							if (envPackageCounter === 0) {
+								for (var i = env.packages.length - 1; i >= 0; i--) {
+									$scope.latestRevisionNumbers[env.packages[i].repo] = env.packages[i].revision;
+								}
+							}
+							if (envPackageCounter === envLength) {
+								$scope.enhanceEnvironments();
+								$scope.$apply();
+							}
+						});
+					};
 
 				if (envLength > 0) {
 					for (var key in $scope.environments) {
 						getEnvDetails($scope.environments[key]);
 					}
 				}
-
-				function getEnvDetails(env) {
-					console.log('getEnvDetails', env);
-					Background.getEnvData('/server-status?env=' + env.id, function(serviceResponse) {
-						env.services = serviceResponse;
-
-						envServiceCounter++;
-						if (envServiceCounter === envLength) {
-							$scope.$apply();
-						}
-					});
-
-					Background.getEnvData('/packages?env=' + env.id, function(packageResponse) {
-						env.packages = packageResponse;
-
-						envPackageCounter++;
-						if (envPackageCounter === 0) {
-							for (var i = env.packages.length - 1; i >= 0; i--) {
-								$scope.latestRevisionNumbers[env.packages[i].repo] = env.packages[i].revision;
-							}
-						}
-						if (envPackageCounter === envLength) {
-							$scope.loading = false;
-							$scope.enhanceEnvironments();
-							$scope.$apply();
-						}
-					});
-				};
 			});
 
 			$scope.latestRevisionNumbers = {};

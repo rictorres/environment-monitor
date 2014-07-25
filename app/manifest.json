@@ -14,10 +14,7 @@
 	"permissions": [
 		"notifications",
 		"storage",
-		"http://10.11.57.222/",
-		"http://10.11.57.222:3000/",
-		"http://dax-dev07/",
-		"http://dax-dev07:3000/"
+		"*://*/*"
 	],
 	"browser_action": {
 		"default_icon": {

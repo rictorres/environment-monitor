@@ -14,9 +14,9 @@
 			var self = this;
 
 			self.getEnvironments(function(response) {
-				if (Object.keys(response.environments).length > 0) {
-					EnvMon.Database.set(response, function() {
-						console.log('Environments loaded:', response.environments);
+				if (Object.keys(response).length > 0) {
+					EnvMon.Database.set({'environments': response}, function() {
+						console.log('Environments loaded:', response);
 					});
 				}
 
@@ -83,16 +83,10 @@
 		getEnvironments: function(callback) {
 			var self = this;
 
-			EnvMon.Database.get('environments', function(data) {
-				if (data.environments && Object.keys(data.environments).length > 0) {
-					callback && callback(data);
-				} else {
-					$.ajax({
-						url: self.config.server + '/envs'
-					}).success(function(response) {
-						callback && callback(response);
-					});
-				}
+			$.ajax({
+				url: self.config.server + '/envs'
+			}).success(function(response) {
+				callback && callback(response);
 			});
 		}
 	};

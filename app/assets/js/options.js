@@ -15,7 +15,13 @@
 			return chrome.extension.getBackgroundPage().EnvMon.Background;
 		}])
 
-		.controller('OptionsCtrl', ['$scope', '$timeout', 'Database', 'Background', function ($scope, $timeout, Database, Background) {
+		.filter('url', [function() {
+			return function(input) {
+				return (input.substr(-1) === '/') ? input.substr(0, input.length - 1) : input;
+			};
+		}])
+
+		.controller('OptionsCtrl', ['$scope', '$timeout', '$filter', 'Database', 'Background', function ($scope, $timeout, $filter, Database, Background) {
 			var manifest = chrome.runtime.getManifest();
 			$scope.appVersion = manifest.version;
 			$scope.environments = null;
@@ -33,7 +39,7 @@
 				if ($scope.defaults.server !== '') {
 					Database.set({
 						'defaultServer': {
-							'addr': $scope.defaults.server
+							'addr': $filter('url')($scope.defaults.server)
 						}
 					}, function() {
 						Background.setup();

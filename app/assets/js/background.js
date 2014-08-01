@@ -106,10 +106,18 @@
 							});
 						}
 
+						var imageOptions = {
+							path: {}
+						};
+
 						if (obj.defaultEnvironment.online) {
-							self.setBadge('#21BE11');
+							imageOptions.path['19'] = '/assets/images/icon-green-19.png';
+							imageOptions.path['38'] = '/assets/images/icon-green-38.png';
+							chrome.browserAction.setIcon(imageOptions);
 						} else {
-							self.setBadge('#DE0B0B');
+							imageOptions.path['19'] = '/assets/images/icon-red-19.png';
+							imageOptions.path['38'] = '/assets/images/icon-red-38.png';
+							chrome.browserAction.setIcon(imageOptions);
 						}
 					});
 				}

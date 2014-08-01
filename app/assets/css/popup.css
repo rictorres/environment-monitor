@@ -88,3 +88,7 @@
 .text-right {
 	text-align: right;
 }
+
+.clear {
+	clear: left;
+}

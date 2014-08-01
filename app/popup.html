@@ -47,7 +47,7 @@
 							<br>Please, set the API URL in the <a href="options.html" target="_blank">Options</a> page first.</p>
 					</div>
 					<div ng-if="!loading && environments">
-						<div class="col-xs-6" ng-repeat="env in environments">
+						<div class="col-xs-6" ng-repeat="env in environments" ng-class-odd="'clear'">
 							<div class="panel panel-default">
 								<label class="panel-heading" ng-click="selectEnv(env.id)">
 									<h1 class="panel-title">
@@ -65,7 +65,7 @@
 									</thead>
 									<tbody>
 										<tr ng-if="!env.packages">
-											<td><p>Loading status...</p><td>
+											<td colspan="3"><p>Loading status...</p><td>
 										</tr>
 										<tr ng-if="env.packages" ng-repeat="package in env.packages">
 											<td>{{package.repo}}</td>

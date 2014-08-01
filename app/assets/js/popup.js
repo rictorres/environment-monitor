@@ -61,6 +61,7 @@
 
 					Background.getData('/packages?env=' + env.id, function(packageResponse) {
 						env.packages = packageResponse;
+						$scope.$apply();
 
 						envPackageCounter++;
 						if (envPackageCounter === 0) {

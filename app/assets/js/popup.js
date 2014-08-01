@@ -122,14 +122,15 @@
 					env.onFire = true;
 				}
 
-				for (var i = $scope.environments.length - 1; i >= 0; i--) {
-					getLatestRevisionNumber($scope.environments[i]);
+				var key;
+				for (key in $scope.environments) {
+					getLatestRevisionNumber($scope.environments[key]);
 				}
-				for (var k = $scope.environments.length - 1; k >= 0; k--) {
-					checkForLatestAndUniqueRevisions($scope.environments[k]);
+				for (key in $scope.environments) {
+					checkForLatestAndUniqueRevisions($scope.environments[key]);
 				}
-				for (var l = $scope.environments.length - 1; l >= 0; l--) {
-					checkForPerfectEnvironments($scope.environments[l]);
+				for (key in $scope.environments) {
+					checkForPerfectEnvironments($scope.environments[key]);
 				}
 			};
 		}]);

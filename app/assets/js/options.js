@@ -11,32 +11,63 @@
 			return chrome.extension.getBackgroundPage().EnvMon.Database;
 		}])
 
-		.controller('OptionsCtrl', ['$scope', 'Database', function ($scope, Database) {
+		.factory('Background', [function() {
+			return chrome.extension.getBackgroundPage().EnvMon.Background;
+		}])
+
+		.controller('OptionsCtrl', ['$scope', '$timeout', 'Database', 'Background', function ($scope, $timeout, Database, Background) {
 			var manifest = chrome.runtime.getManifest();
 			$scope.appVersion = manifest.version;
-			$scope.environments = {};
-			$scope.defaultEnvironment = 'none';
+			$scope.environments = null;
+			$scope.defaults = {
+				server: null,
+				environment: 'none'
+			};
 
-			$scope.updateDefaultEnv = function() {
-				if ($scope.defaultEnvironment !== 'none') {
+			$scope.updateOptions = function() {
+				$scope.updateDefaultServer();
+				$scope.updateDefaultEnv();
+			};
+
+			$scope.updateDefaultServer = function() {
+				if ($scope.defaults.server !== '') {
 					Database.set({
-						'defaultEnvironment': {
-							'name': $scope.defaultEnvironment
+						'defaultServer': {
+							'addr': $scope.defaults.server
 						}
+					}, function() {
+						Background.setup();
+
+						$timeout($scope.getData, 2000);
 					});
-				} else {
-					Database.remove('defaultEnvironment');
 				}
 			};
 
-			Database.get(null, function(data) {
-				$scope.environments = data.environments;
-				if (data.defaultEnvironment) {
-					$scope.defaultEnvironment = data.defaultEnvironment.name;
+			$scope.updateDefaultEnv = function() {
+				if ($scope.defaults.environment !== 'none') {
+					Database.set({
+						'defaultEnvironment': {
+							'name': $scope.defaults.environment
+						}
+					});
 				}
-				$scope.updateDefaultEnv();
-				$scope.$apply();
-			});
+			};
+
+			$scope.getData = function() {
+				Database.get(null, function(data) {
+					console.log(data);
+					$scope.environments = data.environments;
+					if (data.defaultEnvironment && data.defaultEnvironment.name !== '') {
+						$scope.defaults.environment = data.defaultEnvironment.name;
+					}
+					if (data.defaultServer && data.defaultServer.addr !== '') {
+						$scope.defaults.server = data.defaultServer.addr;
+					}
+					$scope.$apply();
+				});
+			};
+
+			$scope.getData();
 		}]);
 
 }(this, this.document, this.jQuery, this.angular));

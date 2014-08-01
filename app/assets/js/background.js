@@ -7,13 +7,28 @@
 
 	EnvMon.Background = {
 		config: {
-			'server': 'http://dax-dev07:3000'
+			'server': ''
+		},
+
+		setup: function() {
+			var self = this;
+
+			EnvMon.Database.get('defaultServer', function(data) {
+				if (data.defaultServer && data.defaultServer.addr) {
+					self.config.server = data.defaultServer.addr;
+					self.init();
+				}
+				else {
+					console.warn('No API defined! Unable to get data.');
+				}
+			});
+
 		},
 
 		init: function() {
 			var self = this;
 
-			self.getEnvironments(function(response) {
+			self.getData('/envs', function(response) {
 				if (Object.keys(response).length > 0) {
 					EnvMon.Database.set({'environments': response}, function() {
 						console.log('Environments loaded:', response);
@@ -30,7 +45,7 @@
 			EnvMon.Database.get('defaultEnvironment', function(data) {
 				console.info('Default environment data loaded', data);
 				if (data.defaultEnvironment) {
-					self.getEnvData('/server-status?env=' + data.defaultEnvironment.name, function(response) {
+					self.getData('/server-status?env=' + data.defaultEnvironment.name, function(response) {
 						console.info('Default environment services status', response);
 						var online = response.some(function(element) {
 							return (element.online !== false);
@@ -70,21 +85,11 @@
 			}
 		},
 
-		getEnvData: function(query, callback) {
+		getData: function(query, callback) {
 			var self = this;
 
 			$.ajax({
 				url: self.config.server + query
-			}).success(function(response) {
-				callback && callback(response);
-			});
-		},
-
-		getEnvironments: function(callback) {
-			var self = this;
-
-			$.ajax({
-				url: self.config.server + '/envs'
 			}).success(function(response) {
 				callback && callback(response);
 			});
@@ -118,7 +123,7 @@
 	};
 
 	$(document).ready(function() {
-		EnvMon.Background.init();
+		EnvMon.Background.setup();
 	});
 
 }(this, this.document, this.jQuery));

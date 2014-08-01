@@ -42,7 +42,11 @@
 					<div ng-if="loading" class="col-xs-12">
 						<p class="loading lead">Loading...</p>
 					</div>
-					<div ng-if="!loading">
+					<div ng-if="!environments && !loading" class="col-xs-12">
+						<p class="loading lead">Sorry, no data could be retrieved :(
+							<br>Please, set the API URL in the <a href="options.html" target="_blank">Options</a> page first.</p>
+					</div>
+					<div ng-if="!loading && environments">
 						<div class="col-xs-6" ng-repeat="env in environments">
 							<div class="panel panel-default">
 								<label class="panel-heading" ng-click="selectEnv(env.id)">

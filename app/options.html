@@ -40,19 +40,31 @@
 
 			<section class="row content">
 				<div class="col-xs-12">
-					<form class="form-horizontal" id="options-form" role="form">
+					<form class="form-horizontal" id="options-form" role="form" ng-submit="updateOptions()">
 						<div class="form-group">
+							<label class="col-sm-4 control-label" for="default-server">API URL</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" name="default-server" id="default-server" value="{{defaults.server}}" ng-model="defaults.server">
+								<p>- where data should be retrieved from
+									<br>
+										- ex.: http://api.example.com</p>
+							</div>
+						</div>
+						<div class="form-group" ng-if="defaults.server && environments">
 							<label class="col-sm-4 control-label" for="default-environment">Default Environment</label>
 							<div class="col-sm-8">
-								<select class="form-control" name="default-environment" ng-model="defaultEnvironment" ng-change="updateDefaultEnv()">
+								<select class="form-control" name="default-environment" ng-model="defaults.environment">
 									<option value="none">None</option>
-									<option ng-repeat="env in environments" value="{{env.id}}" ng-selected="env.id === defaultEnvironment">{{env.title}}</option>
+									<option ng-repeat="env in environments" value="{{env.id}}" ng-selected="env.id === defaults.environment">{{env.title}}</option>
 								</select>
 								<p>- its status will be shown on the extension icon
 									<br>
 									- you will receive desktop notifications when something changes</p>
 							</div>
 						</div>
+						<p class="text-right">
+							<button type="submit" class="btn btn-success">Save</button>
+						</p>
 					</form>
 				</div>
 			</section>

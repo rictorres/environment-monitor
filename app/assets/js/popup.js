@@ -15,8 +15,13 @@
 		}])
 
 		.controller('PopupCtrl', ['$scope', 'Background', 'Database', function ($scope, Background, Database) {
-			$scope.loading = true;
+			$scope.loading = false;
 			$scope.selectedEnvId = null;
+			$scope.environments = null;
+
+			if (Background.config.server !== '') {
+				$scope.loading = true;
+			}
 
 			$scope.selectEnv = function(id) {
 				$scope.selectedEnvId = id;
@@ -35,6 +40,9 @@
 			});
 
 			Database.get('environments', function(envResponse) {
+				if (!envResponse.environments) {
+					return false;
+				}
 				$scope.loading = false;
 				$scope.environments = envResponse.environments;
 
@@ -42,30 +50,30 @@
 				var envPackageCounter = 0;
 				var envServiceCounter = 0;
 				var getEnvDetails = function getEnvDetails(env) {
-						Background.getEnvData('/server-status?env=' + env.id, function(serviceResponse) {
-							env.services = serviceResponse;
+					Background.getData('/server-status?env=' + env.id, function(serviceResponse) {
+						env.services = serviceResponse;
 
-							envServiceCounter++;
-							if (envServiceCounter === envLength) {
-								$scope.$apply();
-							}
-						});
+						envServiceCounter++;
+						if (envServiceCounter === envLength) {
+							$scope.$apply();
+						}
+					});
 
-						Background.getEnvData('/packages?env=' + env.id, function(packageResponse) {
-							env.packages = packageResponse;
+					Background.getData('/packages?env=' + env.id, function(packageResponse) {
+						env.packages = packageResponse;
 
-							envPackageCounter++;
-							if (envPackageCounter === 0) {
-								for (var i = env.packages.length - 1; i >= 0; i--) {
-									$scope.latestRevisionNumbers[env.packages[i].repo] = env.packages[i].revision;
-								}
+						envPackageCounter++;
+						if (envPackageCounter === 0) {
+							for (var i = env.packages.length - 1; i >= 0; i--) {
+								$scope.latestRevisionNumbers[env.packages[i].repo] = env.packages[i].revision;
 							}
-							if (envPackageCounter === envLength) {
-								$scope.enhanceEnvironments();
-								$scope.$apply();
-							}
-						});
-					};
+						}
+						if (envPackageCounter === envLength) {
+							$scope.enhanceEnvironments();
+							$scope.$apply();
+						}
+					});
+				};
 
 				if (envLength > 0) {
 					for (var key in $scope.environments) {

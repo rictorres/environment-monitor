@@ -42,35 +42,6 @@
 		check: function() {
 			var self = this;
 
-			// EnvMon.Database.get('defaultEnvironment', function(data) {
-			// 	console.info('Default environment data loaded', data);
-			// 	if (data.defaultEnvironment) {
-			// 		self.getData('/server-status?env=' + data.defaultEnvironment.name, function(response) {
-			// 			console.info('Default environment services status', response);
-			// 			var online = response.some(function(element) {
-			// 				return (element.online !== false);
-			// 			});
-			// 			var obj = {
-			// 				'defaultEnvironment': {
-			// 					'name': data.defaultEnvironment.name,
-			// 					'online': online
-			// 				}
-			// 			};
-			// 			EnvMon.Database.set(obj, function() {
-			// 				console.info('Default environment data saved', obj);
-			// 				if (obj.defaultEnvironment.online === true) {
-			// 					self.setBadge('#21BE11');
-			// 				}
-			// 				else if (obj.defaultEnvironment.online === false) {
-			// 					self.setBadge('#DE0B0B');
-			// 				}
-			// 				else {
-			// 					self.setBadge();
-			// 				}
-			// 			});
-			// 		});
-			// 	}
-			// });
 			EnvMon.Database.get('defaultEnvironment', function(data) {
 				console.info('Default environment data loaded', data);
 				if (data.defaultEnvironment) {

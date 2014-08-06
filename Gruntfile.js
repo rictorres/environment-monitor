@@ -180,24 +180,18 @@ module.exports = function (grunt) {
 			}
 		},
 
-		htmlmin: {
-			dist: {
-				options: {
-					// removeCommentsFromCDATA: true,
-					// collapseWhitespace: true,
-					// collapseBooleanAttributes: true,
-					// removeAttributeQuotes: true,
-					// removeRedundantAttributes: true,
-					// useShortDoctype: true,
-					// removeEmptyAttributes: true,
-					// removeOptionalTags: true
-				},
+		htmlcompressor: {
+			compile: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.app %>',
+					cwd: '<%= config.dist %>',
 					src: '*.html',
 					dest: '<%= config.dist %>'
-				}]
+				}],
+				options: {
+					type: 'html',
+					removeIntertagSpaces: true
+				}
 			}
 		},
 
@@ -305,7 +299,8 @@ module.exports = function (grunt) {
 		'uglify',
 		'copy',
 		'usemin',
-		'compress'
+		'compress',
+		'htmlcompressor'
 	]);
 
 	grunt.registerTask('default', [

@@ -1,7 +1,6 @@
 # Environment Monitor
 
-
-> Monitors Apache, Tomcat, packages etc. on environments.
+Monitors Apache, Tomcat, packages etc. on environments.
 
 ![](http://rictorres.com/comscore/intro.gif)
 
@@ -23,6 +22,57 @@ Grunt will run with `watch` and `livereload`. Source will be available at `./app
 3. Point to `./app`
 
 
+## Usage
+
+The Environment Monitor is expecting the following JSON:
+```
+{
+	"environments": { // Object
+		"environment-name": {
+			"id": "", // String: unique ID
+			"title": "", // String: title of the environment
+			"addr": "" // String: IP address or domain name
+		},
+		"environment-name": {
+			"id": "", // String: unique ID
+			"title": "", // String: title of the environment
+			"addr": "" // String: IP address or domain name
+		}
+	}
+}
+
+{
+	"packages": [ // Array of objects
+		{
+			"repo": "", // String: name of the repository
+			"branch": "", // String: name of the branch
+			"revision": "" // String: revision/commit ID
+		},
+		{
+			"repo": "", // String: name of the repository
+			"branch": "", // String: name of the branch
+			"revision": "" // String: revision/commit ID
+		}
+	]
+}
+
+{
+	"services": [ // Array of objects
+		{
+			"id": "", // String: unique ID
+			"title": "", // String: title of the service
+			"online": // Boolean: current status of the service (true || false)
+		},
+		{
+			"id": "", // String: unique ID
+			"title": "", // String: title of the service
+			"online": // Boolean: current status of the service (true || false)
+		}
+	]
+}
+```
+
+
 ## Building
 
 Clone this repo `git clone https://github.com/rictorres/environment-monitor.git` or download the [zipball](https://github.com/rictorres/environment-monitor/archive/master.zip).
@@ -37,7 +87,8 @@ Source will be compiled to `./dist/`.
 
 
 ## Support
-- Latest Chrome Dev and Chrome Canary
+- Latest Chrome
+- Firefox support coming soon!
 
 
 ## Help

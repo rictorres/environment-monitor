@@ -6,6 +6,11 @@
 	window.EnvMon = window.EnvMon || {};
 
 	EnvMon.Background = {
+		timer: null,
+		checkTimeout: 12000,
+		maxCheckCount: 4,
+		errorCounter: 0,
+
 		config: {
 			'server': ''
 		},
@@ -46,6 +51,7 @@
 				console.info('Default environment data loaded', data);
 				if (data.defaultEnvironment) {
 					self.getData('/server-status?env=' + data.defaultEnvironment.name, function(response) {
+						self.errorCounter = 0;
 						console.info('Default environment services status', response);
 						var online = response.some(function(element) {
 							return (element.online !== false);
@@ -90,11 +96,31 @@
 							imageOptions.path['38'] = '/assets/images/icon-red-38.png';
 							chrome.browserAction.setIcon(imageOptions);
 						}
+					},
+					function(error) {
+						self.errorCounter++;
+
+						if (self.errorCounter === self.maxCheckCount) {
+							clearTimeout(self.timer);
+							self.errorCounter = 0;
+
+							var notificationOptions = {
+								type: 'basic',
+								title: 'Environment status error',
+								message: data.defaultEnvironment.name + ' status cannot be retrieved due to an error' + (error ? ': ' + error : '.'),
+								iconUrl: '/assets/images/icon-red-128.png'
+							};
+
+							chrome.notifications.create('', notificationOptions, function(id) {
+								console.log('notification!', id);
+							});
+						}
 					});
 				}
 			});
 
-			setTimeout(self.check.bind(self), 8000);
+			clearTimeout(self.timer);
+			self.timer = setTimeout(self.check.bind(self), self.checkTimeout);
 		},
 
 		setBadge: function(color) {
@@ -107,13 +133,15 @@
 			}
 		},
 
-		getData: function(query, callback) {
+		getData: function(query, callback, errCallback) {
 			var self = this;
 
 			$.ajax({
 				url: self.config.server + query
 			}).success(function(response) {
 				callback && callback(response);
+			}).error(function(error, status, message) {
+				errCallback && errCallback(message);
 			});
 		}
 	};

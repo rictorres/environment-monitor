@@ -7,7 +7,7 @@
 
 	EnvMon.Background = {
 		timer: null,
-		checkTimeout: 12000,
+		checkTimeout: 8000,
 		maxCheckCount: 4,
 		errorCounter: 0,
 
@@ -52,7 +52,9 @@
 				if (data.defaultEnvironment) {
 					self.getData('/server-status?env=' + data.defaultEnvironment.name, function(response) {
 						self.errorCounter = 0;
+						self.checkTimeout = 8000;
 						console.info('Default environment services status', response);
+
 						var online = response.some(function(element) {
 							return (element.online !== false);
 						});
@@ -101,8 +103,8 @@
 						self.errorCounter++;
 
 						if (self.errorCounter === self.maxCheckCount) {
-							clearTimeout(self.timer);
 							self.errorCounter = 0;
+							self.checkTimeout = 30000;
 
 							var notificationOptions = {
 								type: 'basic',

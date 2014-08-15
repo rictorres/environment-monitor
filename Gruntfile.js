@@ -263,6 +263,19 @@ module.exports = function (grunt) {
 				},
 				src: '<%= config.app %>',
 				dest: '<%= config.dist %>'
+			},
+			release: {
+				options: {
+					buildnumber: true,
+					background: {
+						target: '<%= config.assets %>/js/background.js',
+						exclude: [
+							'<%= config.assets %>/js/chromereload.js'
+						]
+					}
+				},
+				src: '<%= config.app %>',
+				dest: '<%= config.dist %>'
 			}
 		},
 
@@ -300,6 +313,22 @@ module.exports = function (grunt) {
 		'jshint',
 		'clean:dist',
 		'chromeManifest:dist',
+		'useminPrepare',
+		'concurrent:dist',
+		'concat',
+		'cssmin',
+		'uglify',
+		'copy',
+		'usemin',
+		'compress',
+		'htmlcompressor'
+	]);
+
+	grunt.registerTask('release', [
+		'jshint',
+		'test',
+		'clean:dist',
+		'chromeManifest:release',
 		'useminPrepare',
 		'concurrent:dist',
 		'concat',

@@ -21,6 +21,7 @@ module.exports = function (grunt) {
 
 		// Project settings
 		config: config,
+		pkg: grunt.file.readJSON('package.json'),
 
 		// Watches files for changes and runs tasks based on the changed files
 		watch: {
@@ -263,19 +264,6 @@ module.exports = function (grunt) {
 				},
 				src: '<%= config.app %>',
 				dest: '<%= config.dist %>'
-			},
-			release: {
-				options: {
-					buildnumber: true,
-					background: {
-						target: '<%= config.assets %>/js/background.js',
-						exclude: [
-							'<%= config.assets %>/js/chromereload.js'
-						]
-					}
-				},
-				src: '<%= config.app %>',
-				dest: '<%= config.dist %>'
 			}
 		},
 
@@ -283,7 +271,7 @@ module.exports = function (grunt) {
 		compress: {
 			dist: {
 				options: {
-					archive: 'package/Environment Monitor<%= config.manifest.version %>.zip'
+					archive: 'package/Environment.Monitor-<%= pkg.version %>.zip'
 				},
 				files: [{
 					expand: true,
@@ -291,6 +279,22 @@ module.exports = function (grunt) {
 					src: ['**'],
 					dest: ''
 				}]
+			}
+		},
+
+		bump: {
+			options: {
+				files: ['package.json', 'bower.json', '<%= config.app %>/manifest.json'],
+				updateConfigs: ['pkg'],
+				commit: true,
+				commitMessage: 'Release v%VERSION%',
+				commitFiles: ['package.json', 'bower.json', '<%= config.app %>/manifest.json'],
+				createTag: true,
+				tagName: 'v%VERSION%',
+				tagMessage: 'Version %VERSION%',
+				push: true,
+				pushTo: 'origin',
+				npm: false
 			}
 		}
 	});
@@ -320,25 +324,14 @@ module.exports = function (grunt) {
 		'uglify',
 		'copy',
 		'usemin',
-		'compress',
 		'htmlcompressor'
 	]);
 
-	grunt.registerTask('release', [
-		'jshint',
-		'test',
-		'clean:dist',
-		'chromeManifest:release',
-		'useminPrepare',
-		'concurrent:dist',
-		'concat',
-		'cssmin',
-		'uglify',
-		'copy',
-		'usemin',
-		'compress',
-		'htmlcompressor'
-	]);
+	grunt.registerTask('release', 'Build, bump version and release', function(version) {
+		grunt.task.run(['test', 'build']);
+		grunt.task.run('bump:' + (version ? version : 'patch'));
+		grunt.task.run('compress');
+	});
 
 	grunt.registerTask('default', [
 		'jshint',

@@ -8,7 +8,7 @@
 	EnvMon.Background = {
 		timer: null,
 		checkTimeout: 8000,
-		maxCheckCount: 4,
+		checkTimeoutMilestone: 5,
 		errorCounter: 0,
 
 		config: {
@@ -102,9 +102,9 @@
 					function(error) {
 						self.errorCounter++;
 
-						if (self.errorCounter === self.maxCheckCount) {
+						if (self.errorCounter === self.checkTimeoutMilestone) {
 							self.errorCounter = 0;
-							self.checkTimeout = 30000;
+							self.checkTimeout *= 5;
 
 							var notificationOptions = {
 								type: 'basic',

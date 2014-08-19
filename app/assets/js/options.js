@@ -27,12 +27,14 @@
 			$scope.environments = null;
 			$scope.defaults = {
 				server: null,
-				environment: 'none'
+				environment: 'none',
+				notifications: true
 			};
 
 			$scope.updateOptions = function() {
 				$scope.updateDefaultServer();
 				$scope.updateDefaultEnv();
+				$scope.updateNotifications();
 			};
 
 			$scope.updateDefaultServer = function() {
@@ -59,16 +61,29 @@
 				}
 			};
 
+			$scope.updateNotifications = function() {
+				Database.set({
+					'displayNotifications': $scope.defaults.notifications
+				});
+			};
+
 			$scope.getData = function() {
 				Database.get(null, function(data) {
 					console.log(data);
 					$scope.environments = data.environments;
+
 					if (data.defaultEnvironment && data.defaultEnvironment.name !== '') {
 						$scope.defaults.environment = data.defaultEnvironment.name;
 					}
+
 					if (data.defaultServer && data.defaultServer.addr !== '') {
 						$scope.defaults.server = data.defaultServer.addr;
 					}
+
+					if (data.displayNotifications !== undefined) {
+						$scope.defaults.notifications = data.displayNotifications;
+					}
+
 					$scope.$apply();
 				});
 			};

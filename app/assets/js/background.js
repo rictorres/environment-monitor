@@ -66,21 +66,25 @@
 						};
 						if (data.defaultEnvironment.online !== obj.defaultEnvironment.online) {
 							EnvMon.Database.set(obj, function() {
-								var notificationOptions = {
-									type: 'basic',
-									title: 'Environment status has changed',
-								};
+								EnvMon.Database.get('displayNotifications', function(settings) {
+									if (settings.displayNotifications) {
+										var notificationOptions = {
+											type: 'basic',
+											title: 'Environment status has changed',
+										};
 
-								if (obj.defaultEnvironment.online) {
-									notificationOptions.message = data.defaultEnvironment.name + ' is now online';
-									notificationOptions.iconUrl = '/assets/images/icon-green-128.png';
-								} else {
-									notificationOptions.message = data.defaultEnvironment.name + ' is now offline';
-									notificationOptions.iconUrl = '/assets/images/icon-red-128.png';
-								}
+										if (obj.defaultEnvironment.online) {
+											notificationOptions.message = data.defaultEnvironment.name + ' is now online';
+											notificationOptions.iconUrl = '/assets/images/icon-green-128.png';
+										} else {
+											notificationOptions.message = data.defaultEnvironment.name + ' is now offline';
+											notificationOptions.iconUrl = '/assets/images/icon-red-128.png';
+										}
 
-								chrome.notifications.create('', notificationOptions, function(id) {
-									console.log('notification!', id);
+										chrome.notifications.create('', notificationOptions, function(id) {
+											console.log('notification!', id);
+										});
+									}
 								});
 							});
 						}
@@ -114,14 +118,19 @@
 							};
 							chrome.browserAction.setIcon(imageOptions);
 
-							var notificationOptions = {
-								type: 'basic',
-								title: 'Environment status error',
-								message: data.defaultEnvironment.name + ' status cannot be retrieved due to an error' + (error ? ': ' + error : '.'),
-								iconUrl: '/assets/images/icon-red-128.png'
-							};
-							chrome.notifications.create('', notificationOptions, function(id) {
-								console.log('notification!', id);
+							EnvMon.Database.get('displayNotifications', function(settings) {
+								if (settings.displayNotifications) {
+									var notificationOptions = {
+										type: 'basic',
+										title: 'Environment status error',
+										message: data.defaultEnvironment.name + ' status cannot be retrieved due to an error' + (error ? ': ' + error : '.'),
+										iconUrl: '/assets/images/icon-red-128.png'
+									};
+
+									chrome.notifications.create('', notificationOptions, function(id) {
+										console.log('notification!', id);
+									});
+								}
 							});
 						}
 					});

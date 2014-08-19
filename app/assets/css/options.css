@@ -26,6 +26,11 @@ p {
 	margin: 10px 0 0;
 }
 
+.checkbox label {
+	padding: 0;
+	font-size: 12px;
+}
+
 .no-margin {
 	margin: 0;
 }

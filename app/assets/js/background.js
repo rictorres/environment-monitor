@@ -106,13 +106,20 @@
 							self.errorCounter = 0;
 							self.checkTimeout *= 5;
 
+							var imageOptions = {
+								path: {
+									'19': '/assets/images/icon-grey-19.png',
+									'38': '/assets/images/icon-grey-38.png'
+								}
+							};
+							chrome.browserAction.setIcon(imageOptions);
+
 							var notificationOptions = {
 								type: 'basic',
 								title: 'Environment status error',
 								message: data.defaultEnvironment.name + ' status cannot be retrieved due to an error' + (error ? ': ' + error : '.'),
 								iconUrl: '/assets/images/icon-red-128.png'
 							};
-
 							chrome.notifications.create('', notificationOptions, function(id) {
 								console.log('notification!', id);
 							});

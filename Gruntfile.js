@@ -218,7 +218,7 @@ module.exports = function (grunt) {
 							'<%= config.assets %>/images/{,*/}*.{webp,gif}',
 							'{,*/}*.html',
 							'<%= config.assets %>/css/{,*/}*.css',
-							'<%= config.assets %>/css/fonts/{,*/}*.*',
+							'<%= config.assets %>/fonts/{,*/}*.*',
 							'_locales/{,*/}*.json',
 						]
 					},

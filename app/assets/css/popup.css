@@ -1,3 +1,44 @@
+
+@font-face {
+	font-family: 'Viga Regular';
+	src: url('../fonts/viga-regular.eot');
+	src: url('../fonts/viga-regular.woff') format('woff'),
+		 url('../fonts/viga-regular.ttf') format('truetype'),
+		 url('../fonts/viga-regular.svg#vigaregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'PT Sans';
+	src: url('../fonts/pt-sans.eot');
+	src: url('../fonts/pt-sans.woff') format('woff'),
+		 url('../fonts/pt-sans.ttf') format('truetype'),
+		 url('../fonts/pt-sans.svg#ptsans') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*@font-face {
+	font-family: 'Ubuntu Regular';
+	src: url('../fonts/ubuntu-regular.eot');
+	src: url('../fonts/ubuntu-regular.woff') format('woff'),
+		 url('../fonts/ubuntu-regular.ttf') format('truetype'),
+		 url('../fonts/ubuntu-regular.svg#ubunturegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}*/
+
+@font-face {
+	font-family: 'Ubuntu Bold';
+	src: url('../fonts/ubuntu-bold.eot');
+	src: url('../fonts/ubuntu-bold.woff') format('woff'),
+		 url('../fonts/ubuntu-bold.ttf') format('truetype'),
+		 url('../fonts/ubuntu-bold.svg#ubuntubold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .wrap {
 	position: relative;
 	min-width: 600px;
@@ -32,7 +73,7 @@
 .panel-footer .alert {
 	margin-bottom: 0;
 	text-align: center;
-	padding: 6px 8px;
+	padding: 6px 8px 4px;
 	font-size: 10px;
 }
 
@@ -59,16 +100,16 @@
 
 .glyphicon-star,
 .glyphicon-star-empty {
-	color: #FFA500;
+	color: rgba(37, 71, 133, 0.8);
 }
 
 .glyphicon-flag {
-	color: #20B2AA;
+	color: rgba(37, 71, 133, 0.8);
 	margin-left: 2px;
 }
 
 .glyphicon-fire {
-	color: #FF4500;
+	color: rgba(37, 71, 133, 0.8);
 }
 
 .default-environment {
@@ -91,4 +132,101 @@
 
 .clear {
 	clear: left;
+}
+
+body {
+	background: #eee;
+	font-family: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.navbar {
+	border-radius: 0;
+}
+
+.navbar-nav {
+	margin: 7.5px -15px 0;
+}
+
+.navbar-inverse {
+	background: rgba(37, 48, 79, 0.8);
+	border: none;
+	border-bottom: 1px solid rgba(44, 61, 82, .4);
+}
+
+.navbar-header {
+	color: #fff;
+	font-family: 'Viga Regular', sans-serif;
+	font-size: 22px;
+	text-transform: uppercase;
+	float: left;
+}
+
+.navbar-right {
+	float: right;
+	margin-right: 15px;
+}
+
+.navbar-header .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+	color: #fff;
+	transition: all 0.3s ease-out;
+}
+
+.panel {
+	background-color: #fff;
+	border: none;
+	border-bottom: 3px solid rgba(37, 48, 79, 0.3);
+	border-radius: 0;
+}
+
+.panel-default > .panel-heading {
+	background-color: rgba(37, 48, 79, 0.2);
+	border-color: rgba(202, 209, 219, .5);
+	border-radius: 0;
+	transition: all 0.3s ease-out;
+}
+
+.panel-default > .panel-heading:hover {
+	background: rgba(37, 48, 79, 0.3);
+}
+
+.panel-title {
+	font-size: 16px;
+	font-family: 'Ubuntu Bold', sans-serif;
+	color: rgba(37, 48, 79, 0.8);
+}
+
+.navbar-collapse {
+	padding: 0;
+}
+
+.navbar-nav > li > a {
+	padding-right: 0;
+}
+
+.navbar-link .glyphicon {
+	font-size: 18px;
+}
+
+.table > thead > tr > th {
+	border-bottom: none;
+}
+
+.table > tbody > tr > td {
+	border-top: 1px solid rgba(202, 209, 219, .2);
+}
+
+.table-hover > tbody > tr:hover > td {
+	background-color: rgba(37, 48, 79, 0.05);
+	transition: all 0.3s ease-out;
+}
+
+.alert-success {
+	border-color: none;
+	background-color: rgba(60, 118, 61, 0.2);
+}
+
+.alert-danger {
+	border-color: none;
+	background-color: rgba(169, 68, 66, 0.2);
 }

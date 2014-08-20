@@ -30,7 +30,8 @@
     "grunt-chrome-manifest": "~0.2.1",
     "grunt-contrib-compress": "~0.10.0",
     "grunt-htmlcompressor": "~0.1.10",
-    "grunt-bump": "0.0.15"
+    "grunt-bump": "0.0.15",
+    "grunt-menu": "~0.2.1"
   },
   "engines": {
     "node": ">=0.10.0"

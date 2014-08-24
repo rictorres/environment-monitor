@@ -175,19 +175,19 @@ body {
 .panel {
 	background-color: #fff;
 	border: none;
-	border-bottom: 3px solid rgba(37, 48, 79, 0.3);
+	border-bottom: 3px solid rgba(37, 48, 79, 0.4);
 	border-radius: 0;
 }
 
 .panel-default > .panel-heading {
-	background-color: rgba(37, 48, 79, 0.2);
+	background-color: #fff;
 	border-color: rgba(202, 209, 219, .5);
 	border-radius: 0;
 	transition: all 0.3s ease-out;
 }
 
 .panel-default > .panel-heading:hover {
-	background: rgba(37, 48, 79, 0.3);
+	background: rgba(37, 48, 79, 0.2);
 }
 
 .panel-title {

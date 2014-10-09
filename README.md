@@ -5,6 +5,10 @@ Monitors Apache, Tomcat, packages etc. on environments.
 ![](http://rictorres.com/comscore/intro.gif)
 
 
+## Download
+
+Available on the [Chrome Web Store](http://rictorres.d.pr/1ia0z)
+
 ## Developing
 
 Clone this repo `git clone https://github.com/rictorres/environment-monitor.git` or download the [zipball](https://github.com/rictorres/environment-monitor/archive/master.zip).

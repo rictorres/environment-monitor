@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Environment Monitor by rictorres</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Environment Monitor</h1>
+          <h2>Chrome extension that monitors services (like Apache, Tomcat) and packages etc. on environments</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/rictorres/environment-monitor/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/rictorres/environment-monitor/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/rictorres/environment-monitor" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="environment-monitor" class="anchor" href="#environment-monitor"><span class="octicon octicon-link"></span></a>Environment Monitor</h1>
+
+<p>Monitors Apache, Tomcat, packages etc. on environments.</p>
+
+<p><img src="http://rictorres.com/comscore/intro.gif" alt=""></p>
+
+<h2>
+<a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<p>Available on the <a href="http://rictorres.d.pr/1ia0z">Chrome Web Store</a></p>
+
+<h2>
+<a name="developing" class="anchor" href="#developing"><span class="octicon octicon-link"></span></a>Developing</h2>
+
+<p>Clone this repo <code>git clone https://github.com/rictorres/environment-monitor.git</code> or download the <a href="https://github.com/rictorres/environment-monitor/archive/master.zip">zipball</a>.
+Open your terminal and type:</p>
+
+<pre><code>$ cd environment-monitor
+$ npm install
+$ bower install
+$ grunt debug
+</code></pre>
+
+<p>Grunt will run with <code>watch</code> and <code>livereload</code>. Source will be available at <code>./app</code></p>
+
+<ol>
+<li>Go to <code>chrome://extensions</code>, enable Developer mode</li>
+<li>Click on Load unpacked extension</li>
+<li>Point to <code>./app</code>
+</li>
+</ol>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The Environment Monitor is expecting the following JSON:</p>
+
+<pre><code>{
+    "environments": { // Object
+        "environment-name": {
+            "id": "", // String: unique ID
+            "title": "", // String: title of the environment
+            "addr": "" // String: IP address or domain name
+        },
+        "environment-name": {
+            "id": "", // String: unique ID
+            "title": "", // String: title of the environment
+            "addr": "" // String: IP address or domain name
+        }
+    }
+}
+
+{
+    "packages": [ // Array of objects
+        {
+            "repo": "", // String: name of the repository
+            "branch": "", // String: name of the branch
+            "revision": "" // String: revision/commit ID
+        },
+        {
+            "repo": "", // String: name of the repository
+            "branch": "", // String: name of the branch
+            "revision": "" // String: revision/commit ID
+        }
+    ]
+}
+
+{
+    "services": [ // Array of objects
+        {
+            "id": "", // String: unique ID
+            "title": "", // String: title of the service
+            "online": // Boolean: current status of the service (true || false)
+        },
+        {
+            "id": "", // String: unique ID
+            "title": "", // String: title of the service
+            "online": // Boolean: current status of the service (true || false)
+        }
+    ]
+}
+</code></pre>
+
+<h2>
+<a name="building" class="anchor" href="#building"><span class="octicon octicon-link"></span></a>Building</h2>
+
+<p>Clone this repo <code>git clone https://github.com/rictorres/environment-monitor.git</code> or download the <a href="https://github.com/rictorres/environment-monitor/archive/master.zip">zipball</a>.
+Open your terminal and type:</p>
+
+<pre><code>$ cd environment-monitor
+$ npm install
+$ bower install
+$ grunt build
+</code></pre>
+
+<p>Source will be compiled to <code>./dist/</code>.</p>
+
+<h2>
+<a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h2>
+
+<ul>
+<li>Latest Chrome</li>
+<li>Firefox support coming soon!</li>
+</ul>
+
+<h2>
+<a name="help" class="anchor" href="#help"><span class="octicon octicon-link"></span></a>Help</h2>
+
+<ul>
+<li>Need more information about Chrome Extensions? Please visit <a href="http://developer.chrome.com/extensions/devguide.html">Google Chrome Extension Development</a>
+</li>
+</ul>
+
+<h2>
+<a name="versioning" class="anchor" href="#versioning"><span class="octicon octicon-link"></span></a>Versioning</h2>
+
+<p>For transparency and insight into our release cycle, and for striving to maintain backward compatibility, this app will be maintained under the Semantic Versioning guidelines as much as possible.</p>
+
+<p>Releases will be numbered with the following format:</p>
+
+<p><code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code></p>
+
+<p>And constructed with the following guidelines:</p>
+
+<ul>
+<li>Breaking backward compatibility bumps the major (and resets the minor and patch)</li>
+<li>New additions without breaking backward compatibility bumps the minor (and resets the patch)</li>
+<li>Bug fixes and misc changes bumps the patch</li>
+</ul>
+
+<p>For more information on SemVer, please visit <a href="http://semver.org/">http://semver.org/</a>.</p>
+
+<h2>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h2>
+
+<ul>
+<li><a href="http://github.com/rictorres">Ricardo Torres</a></li>
+<li><a href="https://github.com/tameraydin">Tamer Aydin</a></li>
+</ul>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><a href="http://rictorres.mit-license.org/">MIT License</a></p>
+        </section>
+
+        <footer>
+          Environment Monitor is maintained by <a href="https://github.com/rictorres">rictorres</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>

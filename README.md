@@ -2,7 +2,7 @@
 
 Monitors Apache, Tomcat, packages etc. on environments.
 
-![](http://rictorres.com/comscore/intro.gif)
+![](http://lh6.googleusercontent.com/PPozxbWvMpKJJVmh1leBW8yhO7e0usMRUvi4sJrPw4yKGtCERJdCRC9lCBImVqa0UZEkLl3g1g=s1280-h800-e365-rw)
 
 
 ## Download

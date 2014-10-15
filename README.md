@@ -121,3 +121,5 @@ For more information on SemVer, please visit [http://semver.org/](http://semver.
 ## License
 
 [MIT License](http://rictorres.mit-license.org/)
+
+[![Analytics](https://ga-beacon.appspot.com/UA-55757250-3/environment-monitor/readme)](https://github.com/igrigorik/ga-beacon)
